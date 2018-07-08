@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context="com.alchemist.ssa.EventStuffs.Event">
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+<android.support.design.widget.AppBarLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+<CalendarView
+    android:id="@+id/calendarView"
+    android:background="@drawable/backgradient"
+    android:layout_width="match_parent"
+    android:layout_height="280dp"></CalendarView>
+
+
+
+</android.support.design.widget.AppBarLayout>
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tablayout"
+        app:tabGravity="fill"
+        android:padding="2dp"
+        app:tabTextColor="#fafafa"
+        android:layout_marginBottom="20dp"
+        android:layout_gravity="center|center_horizontal"
+        app:tabIndicatorColor="@color/colorPrimaryDark"
+        android:background="@color/colorPrimary"
+        app:tabMode="fixed"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+</android.support.design.widget.TabLayout>
+
+<android.support.v4.view.ViewPager
+    android:id="@+id/viewpager"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+</android.support.v4.view.ViewPager>
+
+
+
+</LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_gravity="bottom|right"
+        app:fabSize="normal"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/floatgradient"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/phone" />
+
+</android.support.design.widget.CoordinatorLayout>
+
