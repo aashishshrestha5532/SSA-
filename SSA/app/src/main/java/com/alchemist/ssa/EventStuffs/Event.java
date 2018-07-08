@@ -24,6 +24,7 @@ public class Event extends AppCompatActivity {
     TabLayout tabLayout;
     ViewPager viewPager;
     CalendarView simpleCalendarView;
+    //started at 2018/07/08
     // set red color for the week number
 
     @SuppressLint("ResourceType")
