@@ -86,6 +86,7 @@ public class Attendance extends AppCompatActivity implements AttendanceInterface
         student_remarks=findViewById(R.id.student_remarks);
 
         loadStudents();//Load Dummy Data
+        //my first commit
 
 
 
