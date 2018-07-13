@@ -14,6 +14,17 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.alchemist.ssa.R;
+import com.alchemist.ssa.StringResource;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +41,8 @@ public class HolidayEventFragment extends Fragment {
     private int thresholdLoad=2;
     ProgressBar progressBar;
     private int count=0;
+    private static final String event_url= StringResource.getUrl()+"/events";
+   // private static final String event_url="http://192.168.1.103:8000/events";
 
 
     public HolidayEventFragment(){
@@ -92,15 +105,39 @@ public class HolidayEventFragment extends Fragment {
         return v;
     }
     public void setData(){
-        list.add(new EventModel("Maha puja","2015-02-25","maha puja of the year", BitmapFactory.decodeResource(getResources(),R.drawable.category4)));
-        list.add(new EventModel("Maha puja","2015-02-25","maha puja of the year", BitmapFactory.decodeResource(getResources(),R.drawable.category4)));
-        list.add(new EventModel("Maha puja","2015-02-25","maha puja of the year", BitmapFactory.decodeResource(getResources(),R.drawable.category4)));
-        list.add(new EventModel("Maha puja","2015-02-25","maha puja of the year", BitmapFactory.decodeResource(getResources(),R.drawable.category4)));
-        list.add(new EventModel("Maha puja","2015-02-25","maha puja of the year", BitmapFactory.decodeResource(getResources(),R.drawable.category4)));
-        list.add(new EventModel("Maha puja","2015-02-25","maha puja of the year", BitmapFactory.decodeResource(getResources(),R.drawable.category4)));
-        list.add(new EventModel("Maha puja","2015-02-25","maha puja of the year", BitmapFactory.decodeResource(getResources(),R.drawable.category4)));
-        list.add(new EventModel("Maha puja","2015-02-25","maha puja of the year", BitmapFactory.decodeResource(getResources(),R.drawable.category4)));
-        eventAdapter.notifyDataSetChanged();
+        StringRequest stringRequest=new StringRequest(Request.Method.GET, event_url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    int count=0;
+                    JSONObject jsonObject=new JSONObject(response);
+                    JSONArray jsonArray=jsonObject.getJSONArray("event_list");
+                    while(count<jsonArray.length()){
+                        JSONObject jsonObject1=jsonArray.getJSONObject(count);
+                        String event_title=jsonObject1.getString("name");
+                        String event_type=jsonObject1.getString("type");
+                        String date=jsonObject1.getString("date");
+                        if(event_type.equals("holiday"))
+                        list.add(new EventModel(event_title,date,event_type, BitmapFactory.decodeResource(getResources(),R.drawable.logoholiday)));
+                        count++;
+
+                    }
+                    eventAdapter.notifyDataSetChanged();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        RequestQueue requestQueue= Volley.newRequestQueue(getActivity());
+        requestQueue.add(stringRequest);
 
     }
     public void loadDynamically(int offset,boolean dynamicLoad){

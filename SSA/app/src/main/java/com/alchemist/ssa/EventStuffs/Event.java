@@ -15,6 +15,7 @@ import android.widget.CalendarView;
 import android.widget.Toast;
 
 import com.alchemist.ssa.R;
+import com.alchemist.ssa.StringResource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,7 @@ public class Event extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
+        StringResource.setUrl(getString(R.string.ipaddress));
 
         tabLayout=findViewById(R.id.tablayout);
         viewPager=findViewById(R.id.viewpager);
@@ -40,13 +42,20 @@ public class Event extends AppCompatActivity {
         //tabLayout.setTabTextColors(R.color.tabColor,R.color.changeTabColor);
         tabLayout.setupWithViewPager(viewPager,false);
         simpleCalendarView= (CalendarView) findViewById(R.id.calendarView);
+
+       simpleCalendarView.setBackgroundColor(R.color.tabColor);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            simpleCalendarView.setWeekDayTextAppearance(R.color.colorAccent);
+        }
         simpleCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                Toast.makeText(getApplicationContext(),month+dayOfMonth+"",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplication(),month+1+"",Toast.LENGTH_SHORT).show();
+
+
             }
         });
-//        /simpleCalendarView.setWeekNumberColor(Color.RED);
+        //simpleCalendarView.setWeekNumberColor(Color.RED);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             simpleCalendarView.setWeekDayTextAppearance(Color.RED);
         }

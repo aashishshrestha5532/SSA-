@@ -1,5 +1,6 @@
 package com.alchemist.ssa.EventStuffs;
 
+import android.content.ServiceConnection;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,11 +13,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.alchemist.ssa.R;
+import com.alchemist.ssa.StringResource;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -37,7 +42,7 @@ public class NormalEventFragment extends Fragment {
    RecyclerView recyclerView;
    EventAdapter eventAdapter;
    private boolean isLoading=false;
-   private static final String event_url="http://192.168.1.101:8000/events";
+    private static final String event_url= StringResource.getUrl()+"/events";
    private String TAG="response";
    private int thresholdLoad=2;
     ProgressBar progressBar;
@@ -119,6 +124,7 @@ public class NormalEventFragment extends Fragment {
                         String event_title=jsonObject1.getString("name");
                         String event_type=jsonObject1.getString("type");
                         String date=jsonObject1.getString("date");
+                        if(event_type.equals("normal"))
                         list.add(new EventModel(event_title,date,event_type, BitmapFactory.decodeResource(getResources(),R.drawable.logoholiday)));
                         count++;
 
@@ -133,6 +139,8 @@ public class NormalEventFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                handleVolleyError(error);
+
 
             }
         });
@@ -180,6 +188,22 @@ public class NormalEventFragment extends Fragment {
         //eventAdapter.notifyDataSetChanged();
 
 
+
+
+    }
+    public void handleVolleyError(VolleyError error){
+        if(error instanceof TimeoutError){
+            Toast.makeText(getActivity(),"Connection is out",Toast.LENGTH_LONG).show();
+           // hideDialog();
+        }
+        else if(error instanceof ServiceConnection){
+            Toast.makeText(getActivity(),"Server out",Toast.LENGTH_LONG).show();
+            //hideDialog();
+        }
+        else if(error instanceof NoConnectionError){
+            Toast.makeText(getActivity(),"No connection",Toast.LENGTH_LONG).show();
+            //hideDialog();
+        }
 
 
     }

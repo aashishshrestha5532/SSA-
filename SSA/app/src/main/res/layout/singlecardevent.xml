@@ -10,6 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="111dp"
         app:cardCornerRadius="5dp"
+        android:background="#edffff"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,7 +62,7 @@
 
             <TextView
                 android:id="@+id/event_title"
-                android:layout_width="257dp"
+                android:layout_width="247dp"
                 android:layout_height="32dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
@@ -70,10 +75,10 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.927"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.126" />
+                app:layout_constraintVertical_bias="0.0" />
 
             <ImageView
                 android:id="@+id/event_image"
