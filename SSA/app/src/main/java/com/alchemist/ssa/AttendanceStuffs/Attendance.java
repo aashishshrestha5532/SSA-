@@ -111,7 +111,7 @@ public class Attendance extends AppCompatActivity implements AttendanceInterface
                     currentRoll.startAnimation(shrink_expand);
                     totalStudentGrid.smoothScrollToPosition(currentPosition+1);//Scroll the position if it is currently invisible
                 }
-hu
+
             }
         });
 

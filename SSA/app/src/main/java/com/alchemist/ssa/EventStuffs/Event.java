@@ -25,6 +25,7 @@ public class Event extends AppCompatActivity {
     TabLayout tabLayout;
     ViewPager viewPager;
     CalendarView simpleCalendarView;
+
     //started at 2018/07/08
     // set red color for the week number
 
@@ -34,6 +35,7 @@ public class Event extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
         StringResource.setUrl(getString(R.string.ipaddress));
+
 
         tabLayout=findViewById(R.id.tablayout);
         viewPager=findViewById(R.id.viewpager);

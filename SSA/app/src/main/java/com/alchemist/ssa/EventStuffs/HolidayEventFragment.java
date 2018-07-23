@@ -123,6 +123,7 @@ public class HolidayEventFragment extends Fragment {
 
                     }
                     eventAdapter.notifyDataSetChanged();
+                    //change
 
                 } catch (JSONException e) {
                     e.printStackTrace();

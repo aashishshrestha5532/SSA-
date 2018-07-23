@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "245146244531",
+    "firebase_url": "https://ssa-app-889f3.firebaseio.com",
+    "project_id": "ssa-app-889f3",
+    "storage_bucket": "ssa-app-889f3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:245146244531:android:70b7f8560117dc41",
+        "android_client_info": {
+          "package_name": "com.alchemist.ssa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "245146244531-i5fivq4q9sdl5ffn6a3o8cf0akcvvb1v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFnBQg0D19lBxUGH14PArbWnRqw-1WGM0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

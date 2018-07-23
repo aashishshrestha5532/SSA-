@@ -13,12 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".EventStuffs.Event">
-
-        </activity>
-        <activity android:name=".EventStuffs.EventDetail"></activity>
-
+        <activity android:name=".MainActivity" />
+        <activity android:name=".EventStuffs.Event"></activity>
+        <activity android:name=".EventStuffs.EventDetail" />
         <activity android:name=".AttendanceStuffs.Attendance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,8 +23,29 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".LoginStuffs.Login"></activity>
 
-
+        <service
+            android:exported="true"
+            android:name=".FireBaseStuffs.FirebaseInstanceIdServ">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+        <service
+            android:exported="true"
+            android:name=".FireBaseStuffs.FireBaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        <!--<meta-data-->
+            <!--android:name="com.google.firebase.messaging.default_notification_icon"-->
+            <!--android:resource="@drawable/money" />-->
+        <!--&lt;!&ndash; Set color used with incoming notification messages. This is used when no color is set for the incoming notification message. &ndash;&gt;-->
+        <!--<meta-data-->
+            <!--android:name="com.google.firebase.messaging.default_notification_color"-->
+            <!--android:resource="@color/colorAccent" />-->
     </application>
 
 </manifest>
