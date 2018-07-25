@@ -207,6 +207,9 @@ public class Attendance extends AppCompatActivity implements AttendanceInterface
         model=new AttendanceGridModel("Hari Thapa","6",30,19,"average","average");
 
         attendanceGridModels.add(model);
+        model=new AttendanceGridModel("Hari Thapa","7",30,19,"average","average");
+
+        attendanceGridModels.add(model);
 
 
         attendanceGridAdapter.notifyDataSetChanged();
