@@ -49,6 +49,8 @@ import java.util.List;
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+//        fetching the position of the schedule
+
         holder.className.setText(scheduleList.get(position).getClassName()+"");
             holder.subjectName.setText(scheduleList.get(position).getSubject()+"");
 

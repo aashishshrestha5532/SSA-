@@ -1,6 +1,7 @@
 package com.alchemist.ssa.ScheduleStuffs;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import java.util.List;
 public class ScheduleGridAdapter  extends RecyclerView.Adapter<ScheduleGridAdapter.ViewHolder>{
     private Context context;
     List<MyTypeModel> list;
+    private int itemPosition=0;
 
     private ScheduleInterface scheduleInterface;
 
@@ -34,7 +36,7 @@ public class ScheduleGridAdapter  extends RecyclerView.Adapter<ScheduleGridAdapt
                 public void onClick(View view) {
                     //ScheduleGridModel model= list.get(getAdapterPosition());
                     scheduleInterface.setDetails(list.get(getAdapterPosition()));
-
+                        itemPosition++;
 
                 }
             });
@@ -49,13 +51,22 @@ public class ScheduleGridAdapter  extends RecyclerView.Adapter<ScheduleGridAdapt
 
     @Override
     public void onBindViewHolder(ScheduleGridAdapter.ViewHolder holder, int position) {
+
+               if(getSelectedItemPosition()==position){
+                   holder.dailySchedule.setBackgroundColor(Color.TRANSPARENT);
+               }
         holder.dailySchedule.setText(list.get(position).getName());
+               //itemPosition++;
+
     }
 
     @Override
     public int getItemCount() {
         return list.size();
 
+    }
+    public int getSelectedItemPosition(){
+        return itemPosition;
     }
     public void setScheduleInterface(ScheduleInterface scheduleInterface){
         this.scheduleInterface = scheduleInterface;

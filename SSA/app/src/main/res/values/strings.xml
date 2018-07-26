@@ -4,4 +4,5 @@
     <string name="ipaddress">http://192.168.1.106:8000</string>
     <string name="firebase_token">firebaseToken</string>
     <string name="fcm_key">fcm_key</string>
+    <string name="sunday">sunday</string>
 </resources>

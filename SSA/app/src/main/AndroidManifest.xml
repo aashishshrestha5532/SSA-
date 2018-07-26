@@ -17,14 +17,17 @@
         <activity android:name=".EventStuffs.Event"></activity>
         <activity android:name=".EventStuffs.EventDetail" />
         <activity android:name=".AttendanceStuffs.Attendance">
+
+        </activity>
+        <activity android:name=".LoginStuffs.Login"></activity>
+        <activity android:name=".ScheduleStuffs.Schedule">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".LoginStuffs.Login"></activity>
 
+        </activity>
         <service
             android:exported="true"
             android:name=".FireBaseStuffs.FirebaseInstanceIdServ">
