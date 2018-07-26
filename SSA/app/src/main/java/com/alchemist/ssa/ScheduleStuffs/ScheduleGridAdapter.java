@@ -2,6 +2,8 @@ package com.alchemist.ssa.ScheduleStuffs;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,8 +29,9 @@ public class ScheduleGridAdapter  extends RecyclerView.Adapter<ScheduleGridAdapt
     public class ViewHolder extends RecyclerView.ViewHolder {
         public Button dailySchedule;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(final View itemView) {
             super(itemView);
+
 
             dailySchedule = itemView.findViewById(R.id.dailySchedule);
             dailySchedule.setOnClickListener(new View.OnClickListener() {
@@ -36,10 +39,22 @@ public class ScheduleGridAdapter  extends RecyclerView.Adapter<ScheduleGridAdapt
                 public void onClick(View view) {
                     //ScheduleGridModel model= list.get(getAdapterPosition());
                     scheduleInterface.setDetails(list.get(getAdapterPosition()));
-                        itemPosition++;
+
+                    if(getAdapterPosition()==RecyclerView.NO_POSITION)
+                        return;
+
+                    notifyItemChanged(itemPosition);
+                    itemPosition=getAdapterPosition();
+                    notifyItemChanged(itemPosition);
+
+
+
+                   // dailySchedule.setBackgroundColor(Color.TRANSPARENT);
+
 
                 }
             });
+           // dailySchedule.setBackgroundColor(Color.RED);
         }
     }
 
@@ -50,12 +65,21 @@ public class ScheduleGridAdapter  extends RecyclerView.Adapter<ScheduleGridAdapt
     }
 
     @Override
-    public void onBindViewHolder(ScheduleGridAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
 
-               if(getSelectedItemPosition()==position){
-                   holder.dailySchedule.setBackgroundColor(Color.TRANSPARENT);
-               }
         holder.dailySchedule.setText(list.get(position).getName());
+        if(itemPosition==position){
+            holder.dailySchedule.setBackgroundColor(Color.TRANSPARENT);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                holder.dailySchedule.setBackground(ContextCompat.getDrawable(context,R.drawable.ovalback));
+            }
+        }
+        else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                holder.dailySchedule.setBackground(ContextCompat.getDrawable(context,R.drawable.rounded_rectangle));
+            }
+        }
+        //holder.dailySchedule.setBackgroundColor((itemPosition==position)? Color.TRANSPARENT:R.drawable.rounded_rectangle);
                //itemPosition++;
 
     }
@@ -72,5 +96,9 @@ public class ScheduleGridAdapter  extends RecyclerView.Adapter<ScheduleGridAdapt
         this.scheduleInterface = scheduleInterface;
     }
 
+    public int getselected(int x){
+        itemPosition=x;
 
+        return itemPosition;
+    }
 }
