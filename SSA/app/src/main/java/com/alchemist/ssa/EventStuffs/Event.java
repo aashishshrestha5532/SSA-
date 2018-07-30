@@ -15,7 +15,7 @@ import android.widget.CalendarView;
 import android.widget.Toast;
 
 import com.alchemist.ssa.R;
-import com.alchemist.ssa.StringResource;
+import com.alchemist.ssa.NetworkStuffs.StringResource;
 
 import java.util.ArrayList;
 import java.util.List;

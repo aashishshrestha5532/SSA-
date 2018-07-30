@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.alchemist.ssa.R;
-import com.alchemist.ssa.StringResource;
+import com.alchemist.ssa.NetworkStuffs.StringResource;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;

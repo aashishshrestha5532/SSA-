@@ -3,8 +3,11 @@
     package="com.alchemist.ssa">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+    <uses-sdk
+        android:minSdkVersion="8" android:targetSdkVersion="8" />
 
     <application
         android:allowBackup="true"
@@ -14,41 +17,56 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity" />
-        <activity android:name=".EventStuffs.Event"></activity>
+        <activity android:name=".EventStuffs.Event" />
         <activity android:name=".EventStuffs.EventDetail" />
-        <activity android:name=".AttendanceStuffs.Attendance">
+        <activity android:name=".AttendanceStuffs.Attendance" />
+        <activity android:name=".LoginStuffs.Login" />
+        <activity android:name=".ScheduleStuffs.Schedule"
+            android:noHistory="true"
+            >
 
         </activity>
-        <activity android:name=".LoginStuffs.Login"></activity>
-        <activity android:name=".ScheduleStuffs.Schedule">
+
+        <service
+            android:name=".FireBaseStuffs.FirebaseInstanceIdServ"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".FireBaseStuffs.FireBaseMessagingService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <!-- <meta-data -->
+        <!-- android:name="com.google.firebase.messaging.default_notification_icon" -->
+        <!-- android:resource="@drawable/money" /> -->
+        <!-- &lt;!&ndash; Set color used with incoming notification messages. This is used when no color is set for the incoming notification message. &ndash;&gt; -->
+        <!-- <meta-data -->
+        <!-- android:name="com.google.firebase.messaging.default_notification_color" -->
+        <!-- android:resource="@color/colorAccent" /> -->
+        <activity
+            android:name=".StartingStuffs.SplashScreen"
+            android:noHistory="true"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".StartingStuffs.WelcomeActivity"
+            android:noHistory="true" />
+        <activity android:name=".StartingStuffs.PostSplash"
+            android:noHistory="true"
+            >
+
 
         </activity>
-        <service
-            android:exported="true"
-            android:name=".FireBaseStuffs.FirebaseInstanceIdServ">
-            <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
-            </intent-filter>
-        </service>
-        <service
-            android:exported="true"
-            android:name=".FireBaseStuffs.FireBaseMessagingService">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
-            </intent-filter>
-        </service>
-        <!--<meta-data-->
-            <!--android:name="com.google.firebase.messaging.default_notification_icon"-->
-            <!--android:resource="@drawable/money" />-->
-        <!--&lt;!&ndash; Set color used with incoming notification messages. This is used when no color is set for the incoming notification message. &ndash;&gt;-->
-        <!--<meta-data-->
-            <!--android:name="com.google.firebase.messaging.default_notification_color"-->
-            <!--android:resource="@color/colorAccent" />-->
     </application>
 
 </manifest>

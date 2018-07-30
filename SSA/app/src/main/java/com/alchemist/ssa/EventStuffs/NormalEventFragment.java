@@ -16,7 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.alchemist.ssa.R;
-import com.alchemist.ssa.StringResource;
+import com.alchemist.ssa.NetworkStuffs.StringResource;
 import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;

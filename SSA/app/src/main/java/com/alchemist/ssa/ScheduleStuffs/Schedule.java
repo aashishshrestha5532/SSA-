@@ -1,14 +1,11 @@
 package com.alchemist.ssa.ScheduleStuffs;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alchemist.ssa.R;
 
@@ -242,7 +239,6 @@ public class Schedule extends AppCompatActivity implements ScheduleInterface {
     private  ScheduleGridAdapter scheduleGridAdapter;
     List<MyTypeModel> lists=new ArrayList<>();
     private TextView textView;
-    private CardView scheduleCardView;
     private RecyclerView detailsRecyclerView;
 
     @Override
