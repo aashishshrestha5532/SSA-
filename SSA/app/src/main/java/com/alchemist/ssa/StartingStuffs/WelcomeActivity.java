@@ -65,7 +65,7 @@ public class WelcomeActivity extends AppCompatActivity {
                     viewPager.setCurrentItem(getCurrentSlide());
                 }
                 else{
-                    startActivity(new Intent(getApplicationContext(),Schedule.class));
+                    startActivity(new Intent(getApplicationContext(),PostSplash.class));
 
                 }
             }
@@ -75,7 +75,7 @@ public class WelcomeActivity extends AppCompatActivity {
         skipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),Schedule.class));
+                startActivity(new Intent(getApplicationContext(),PostSplash.class));
             }
         });
 

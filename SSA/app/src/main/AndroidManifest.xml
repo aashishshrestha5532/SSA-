@@ -2,12 +2,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.alchemist.ssa">
 
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="8" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
-    <uses-sdk
-        android:minSdkVersion="8" android:targetSdkVersion="8" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -21,11 +26,9 @@
         <activity android:name=".EventStuffs.EventDetail" />
         <activity android:name=".AttendanceStuffs.Attendance" />
         <activity android:name=".LoginStuffs.Login" />
-        <activity android:name=".ScheduleStuffs.Schedule"
-            android:noHistory="true"
-            >
-
-        </activity>
+        <activity
+            android:name=".ScheduleStuffs.Schedule"
+            android:noHistory="true"></activity>
 
         <service
             android:name=".FireBaseStuffs.FirebaseInstanceIdServ"
@@ -61,12 +64,10 @@
         <activity
             android:name=".StartingStuffs.WelcomeActivity"
             android:noHistory="true" />
-        <activity android:name=".StartingStuffs.PostSplash"
-            android:noHistory="true"
-            >
-
-
-        </activity>
+        <activity
+            android:name=".StartingStuffs.PostSplash"
+            android:noHistory="true"></activity>
+        <activity android:name=".LoginStuffs.LoginInterface"></activity>
     </application>
 
 </manifest>
