@@ -1,5 +1,6 @@
 package com.alchemist.ssa.AttendanceStuffs;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
@@ -14,20 +15,36 @@ import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.alchemist.ssa.NetworkStuffs.StringResource;
 import com.alchemist.ssa.R;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Attendance extends AppCompatActivity implements AttendanceInterface {
     private final String TAG="Attendance Class:";
     private ConstraintLayout attendanceParent;
-    private FloatingActionButton attendancePresent,attendanceAbsent;
+    private FloatingActionButton attendancePresent,attendanceAbsent,postAttendance;
     private AttendanceGridAdapter attendanceGridAdapter;
     private Button currentRoll;
     private RecyclerView totalStudentGrid;
@@ -36,9 +53,12 @@ public class Attendance extends AppCompatActivity implements AttendanceInterface
     private boolean scrolled=true;
     private TextView studentName;
     private TextView student_performance,student_total,student_absent,student_remarks;
-    private int count=0;
+    private int count=0,offset=0;
+    private static final String attendance_url= StringResource.getUrl()+"/showStudent";
     private Spinner cSpinner,sSppiner;
+    private boolean flag;
     private List<AttendanceGridModel> attendanceGridModels=new ArrayList<>();
+    private List<AttendanceCheck> attendanceChecks=new ArrayList<>();
     private String classes[]={"class 1","class 2","class 3","class 4","class 5","class 6","class 7","class 8","class 9","class 10"};
     private String sections[]={"section A","section B","section C"};
     @Override
@@ -48,6 +68,8 @@ public class Attendance extends AppCompatActivity implements AttendanceInterface
         attendanceParent=findViewById(R.id.attendanceParent);
         cSpinner=findViewById(R.id.classSpinner);
         sSppiner=findViewById(R.id.sectionSpinner);
+
+        postAttendance=findViewById(R.id.postAttendance);
 
         final ArrayAdapter<String> classAdapter=new ArrayAdapter<>(this,R.layout.support_simple_spinner_dropdown_item,classes);
         classAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
@@ -85,14 +107,29 @@ public class Attendance extends AppCompatActivity implements AttendanceInterface
         student_absent=findViewById(R.id.student_normal_attendance);
         student_remarks=findViewById(R.id.student_remarks);
 
-        loadStudents();//Load Dummy Data
+        cSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                attendanceGridModels.clear();
+                String class_id= cSpinner.getSelectedItem().toString();
+                loadStudents(class_id);
+//                notify();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+       //Load Dummy Data
         //my first commit
 
 
 
+//    Log.d("first",attendanceGridModels.get(0).getName()+"");
 
 
-        studentName.setText(attendanceGridModels.get(0).getName());
 
         attendancePresent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,13 +137,24 @@ public class Attendance extends AppCompatActivity implements AttendanceInterface
 
                 final int currentPosition=attendanceGridAdapter.getSelectedItem();//Get the current selected Roll Number
                 Log.d("currentPos",currentPosition+"");
-
-                /*
+                flag=true;
+              //  Toast.makeText(getApplicationContext(),flag+ " "+Integer.parseInt(attendanceGridModels.get(currentPosition).getRollNo())+"",Toast.LENGTH_SHORT).show();
+               /*
                 * Check if the current position is less than the size of the model we are using
                 * Also check if there is any pending call back from layout manager,if so ,ignore this button press
                 * */
                 if(currentPosition<attendanceGridModels.size()&&scrolled) {
                     scrolled=false;
+
+//                    for(int i=0;i<attendanceChecks.size();i++){
+//                        if(currentPosition!=attendanceChecks.get(i).getRoll())
+//                            attendanceChecks.add(new AttendanceCheck(flag, Integer.parseInt(attendanceGridModels.get(currentPosition).getRollNo())));
+//
+//                    }
+                    Log.d("current pos",currentPosition+"");
+                    Log.d("roll ",attendanceGridModels.get(currentPosition).getRollNo());
+                    attendanceChecks.add(new AttendanceCheck(flag, Integer.parseInt(attendanceGridModels.get(currentPosition).getRollNo())));
+
                     attendanceLayoutManager.setPresent(true);//For sending data from the call back method
                     currentRoll.startAnimation(shrink_expand);
                     totalStudentGrid.smoothScrollToPosition(currentPosition+1);//Scroll the position if it is currently invisible
@@ -118,15 +166,47 @@ public class Attendance extends AppCompatActivity implements AttendanceInterface
         attendanceAbsent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                flag=false;
 
                 int currentPosition=attendanceGridAdapter.getSelectedItem();
+
+              //  Toast.makeText(getApplicationContext(),flag+ " "+Integer.parseInt(attendanceGridModels.get(currentPosition).getRollNo())+"",Toast.LENGTH_SHORT).show();
+
                 if(currentPosition<attendanceGridModels.size()&&scrolled) {
                     scrolled=false;
+                    Log.d("current pos",currentPosition+"");
+                    Log.d("roll ",attendanceGridModels.get(currentPosition).getRollNo());
+//                    for(int i=0;i<attendanceChecks.size();i++){
+//                        if(currentPosition!=attendanceChecks.get(i).getRoll())
+//                            attendanceChecks.add(new AttendanceCheck(flag, Integer.parseInt(attendanceGridModels.get(currentPosition).getRollNo())));
+//
+//                    }
+
+                    attendanceChecks.add(new AttendanceCheck(flag, Integer.parseInt(attendanceGridModels.get(currentPosition).getRollNo())));
+
+                    // attendanceChecks.add(new AttendanceCheck(flag, Integer.parseInt(attendanceGridModels.get(attendanceGridAdapter.getSelectedItem()).getRollNo())));
+
                     attendanceLayoutManager.setPresent(false);
                     currentRoll.startAnimation(shrink_expand);
                     totalStudentGrid.smoothScrollToPosition(currentPosition+1);
 
                 }
+            }
+        });
+            postAttendance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                int i=0;
+                while(i<attendanceChecks.size()){
+                    Log.d("datas",attendanceChecks.get(i).getRoll()  +  "  status - "+attendanceChecks.get(i).isFlag());
+                    i++;
+                }
+                Log.d("size",attendanceChecks.size()+"");
+                attendanceChecks.clear();
+                //checking whether the attendance is complete or not
+//                if()
             }
         });
 
@@ -175,7 +255,7 @@ public class Attendance extends AppCompatActivity implements AttendanceInterface
         student_performance.setText("Performance - "+model.getPerformance());
         student_remarks.setText("Remarks - "+model.getRemarks());
         student_total.setText("Total Attendance - "+model.getTotalAttendance());
-        student_absent.setText("Absent -"+(30-model.getPresentAttendance())+ " days");
+        student_absent.setText("Present -"+(model.getPresentAttendance())+ " days");
 
         if(model.getStudentStatus()==0)
             currentRoll.setBackground(ContextCompat.getDrawable(this,R.drawable.absent_student_circle));//Change the drawable
@@ -185,34 +265,81 @@ public class Attendance extends AppCompatActivity implements AttendanceInterface
             currentRoll.setBackground(ContextCompat.getDrawable(this,R.drawable.circle));
     }
 
-    private void loadStudents() {
-        AttendanceGridModel model=new AttendanceGridModel("Susan Thapa","1",30,22,"good","good");
-        attendanceGridModels.add(model);
+    private void loadStudents(final String c_id) {
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, attendance_url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
 
-        model=new AttendanceGridModel("Rajesh Thapa","2",30,23,"good","good");
-        attendanceGridModels.add(model);
+                try {
+                    int i=0;
+                    Log.d("response",response.toString());
+                    JSONObject jsonObject=new JSONObject(response);
+                    JSONArray jsonArray=jsonObject.getJSONArray("response");
+                    while(i<jsonArray.length()) {
+                        JSONObject jsonObject1=jsonArray.getJSONObject(i);
+                        AttendanceGridModel model = new AttendanceGridModel(jsonObject1.getString("student_name"),jsonObject1.getString("id"),jsonObject1.getInt("total"),jsonObject1.getInt("present"),jsonObject1.getString("performance"),jsonObject1.getString("performance"));
+                       attendanceGridModels.add(model);
 
-        model=new AttendanceGridModel("Talank Baral","3",30,23,"good","good");
-
-        attendanceGridModels.add(model);
-
-        model=new AttendanceGridModel("Rajeshsa Thapa","4",30,21,"good","good");
-
-        attendanceGridModels.add(model);
-
-        model=new AttendanceGridModel("Elton Thapa","5",30,23,"good","good");
-
-        attendanceGridModels.add(model);
-
-        model=new AttendanceGridModel("Hari Thapa","6",30,19,"average","average");
-
-        attendanceGridModels.add(model);
-        model=new AttendanceGridModel("Hari Thapa","7",30,19,"average","average");
-
-        attendanceGridModels.add(model);
+                        i++;
+                    }
+                    attendanceGridAdapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
 
-        attendanceGridAdapter.notifyDataSetChanged();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("error","Error is majar");
+            }
+        }){
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+
+               String sec_id=sSppiner.getSelectedItem().toString();
+                Map<String,String> params=new HashMap<>();
+                params.put("class_id",c_id.substring(5));
+                params.put("section_id","1");
+
+                return params;
+            }
+        };
+
+
+
+        RequestQueue requestQueue= Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
+//        AttendanceGridModel model=new AttendanceGridModel("Susan Thapa","1",30,22,"good","good");
+//        attendanceGridModels.add(model);
+//
+//        model=new AttendanceGridModel("Rajesh Thapa","2",30,23,"good","good");
+//        attendanceGridModels.add(model);
+//
+//        model=new AttendanceGridModel("Talank Baral","3",30,23,"good","good");
+//
+//        attendanceGridModels.add(model);
+//
+//        model=new AttendanceGridModel("Rajeshsa Thapa","4",30,21,"good","good");
+//
+//        attendanceGridModels.add(model);
+//
+//        model=new AttendanceGridModel("Elton Thapa","5",30,23,"good","good");
+//
+//        attendanceGridModels.add(model);
+//
+//        model=new AttendanceGridModel("Hari Thapa","6",30,19,"average","average");
+//
+//        attendanceGridModels.add(model);
+//        model=new AttendanceGridModel("Hari Thapa","7",30,19,"average","average");
+//
+//        attendanceGridModels.add(model);
+//
+//
+//        attendanceGridAdapter.notifyDataSetChanged();
 
     }
 
