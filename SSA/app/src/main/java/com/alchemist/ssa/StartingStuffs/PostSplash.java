@@ -15,7 +15,7 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.alchemist.ssa.LoginStuffs.Login;
+import com.alchemist.ssa.AttendanceStuffs.Attendance;
 import com.alchemist.ssa.NetworkStuffs.NetworkCallBackInterface;
 import com.alchemist.ssa.NetworkStuffs.NetworkStateChangeDetector;
 import com.alchemist.ssa.NetworkStuffs.StringResource;
@@ -196,7 +196,7 @@ public class PostSplash extends AppCompatActivity implements NetworkCallBackInte
     }
 
     public void startUp(){
-        Intent intent=new Intent(getApplicationContext(), Login.class);
+        Intent intent=new Intent(getApplicationContext(), Attendance.class);
         startActivity(intent);
     }
 
