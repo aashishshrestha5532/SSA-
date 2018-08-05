@@ -4,7 +4,6 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,8 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import com.alchemist.ssa.R;
 import com.alchemist.ssa.NetworkStuffs.StringResource;
+import com.alchemist.ssa.R;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -60,10 +59,8 @@ public class HolidayEventFragment extends Fragment {
         recyclerView=v.findViewById(R.id.holidayList);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity());
         progressBar=v.findViewById(R.id.progressLoad);
-        DividerItemDecoration decoration=new DividerItemDecoration(recyclerView.getContext(),linearLayoutManager.getOrientation());
 
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.addItemDecoration(decoration);
         // DividerItemDecoration decoration=new DividerItemDecoration(getActivity(),linearLayoutManager.getOrientation());
 
         setData();
@@ -112,6 +109,11 @@ public class HolidayEventFragment extends Fragment {
                     int count=0;
                     JSONObject jsonObject=new JSONObject(response);
                     JSONArray jsonArray=jsonObject.getJSONArray("event_list");
+
+                    if(jsonArray.length()==0) {
+                        eventAdapter.setIsEnd(true);
+                        eventAdapter.notifyItemChanged(recyclerView.getLayoutManager().getItemCount());
+                    }
                     while(count<jsonArray.length()){
                         JSONObject jsonObject1=jsonArray.getJSONObject(count);
                         String event_title=jsonObject1.getString("name");
@@ -123,6 +125,8 @@ public class HolidayEventFragment extends Fragment {
 
                     }
                     eventAdapter.notifyDataSetChanged();
+                    progressBar.setIndeterminate(false);
+                    progressBar.setVisibility(View.GONE);
                     //change
 
                 } catch (JSONException e) {

@@ -20,6 +20,7 @@ import java.util.List;
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
 
     private List<EventModel> eventModels;
+    private boolean isEnd;
     private Context context;
     public EventAdapter(Context context,List<EventModel> eventModels){
         this.context=context;
@@ -67,5 +68,9 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
 
         }
+    }
+
+    public void setIsEnd(boolean isEnd) {
+        this.isEnd =isEnd;
     }
 }

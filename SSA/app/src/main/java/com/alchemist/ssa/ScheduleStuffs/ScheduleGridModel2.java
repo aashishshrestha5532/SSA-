@@ -2,7 +2,7 @@ package com.alchemist.ssa.ScheduleStuffs;
 
 public class ScheduleGridModel2 {
     private String subject,teacherName;
-    private int  className;
+    private String className;
     private String time;
     public String getTeacherName() {
         return teacherName;
@@ -29,15 +29,15 @@ public class ScheduleGridModel2 {
         this.time = time;
     }
 
-    public int getClassName() {
+    public String getClassName() {
         return className;
     }
 
-    public void setClassName(int className) {
+    public void setClassName(String className) {
         this.className = className;
     }
 
-    public ScheduleGridModel2(int className, String subject, String time,String teacherName){
+    public ScheduleGridModel2(String className, String subject, String time,String teacherName){
         this.className = className;
         this.subject = subject;
         this.time = time;

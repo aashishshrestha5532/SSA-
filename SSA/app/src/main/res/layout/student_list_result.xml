@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="horizontal"
+
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="10dp"
+    android:background="@drawable/custom_grid_ripple">
+
+    <TextView
+        android:textSize="17dp"
+        android:id="@+id/studentRollNo"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+
+
+        android:text="Roll 50"
+        />
+    <TextView
+        android:layout_marginLeft="25dp"
+        android:id="@+id/studentName"
+        android:layout_width="135dp"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="true"
+        android:textSize="17dp"
+        android:text="Student Name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        />
+
+    <TextView
+        android:layout_marginLeft="25dp"
+        android:id="@+id/studentMarks"
+        android:textSize="17dp"
+        android:layout_width="45dp"
+        android:layout_height="wrap_content"
+        android:text="Class"
+        />
+
+    <TextView
+        android:gravity="center"
+        android:textSize="17dp"
+        android:layout_marginLeft="30dp"
+        android:id="@+id/studentPos"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+
+        android:text="studentSection"
+        />
+
+
+
+</LinearLayout>

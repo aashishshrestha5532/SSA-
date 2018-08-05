@@ -1,6 +1,5 @@
 package com.alchemist.ssa.AttendanceStuffs;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
@@ -20,7 +19,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alchemist.ssa.NetworkStuffs.StringResource;
 import com.alchemist.ssa.R;
@@ -143,16 +141,12 @@ public class Attendance extends AppCompatActivity implements AttendanceInterface
                 * Check if the current position is less than the size of the model we are using
                 * Also check if there is any pending call back from layout manager,if so ,ignore this button press
                 * */
-                if(currentPosition<attendanceGridModels.size()&&scrolled) {
+                if(currentPosition<attendanceGridModels.size()&&scrolled && attendanceChecks.size()<attendanceGridModels.size()) {
                     scrolled=false;
 
-//                    for(int i=0;i<attendanceChecks.size();i++){
-//                        if(currentPosition!=attendanceChecks.get(i).getRoll())
-//                            attendanceChecks.add(new AttendanceCheck(flag, Integer.parseInt(attendanceGridModels.get(currentPosition).getRollNo())));
-//
-//                    }
                     Log.d("current pos",currentPosition+"");
                     Log.d("roll ",attendanceGridModels.get(currentPosition).getRollNo());
+
                     attendanceChecks.add(new AttendanceCheck(flag, Integer.parseInt(attendanceGridModels.get(currentPosition).getRollNo())));
 
                     attendanceLayoutManager.setPresent(true);//For sending data from the call back method
@@ -160,7 +154,22 @@ public class Attendance extends AppCompatActivity implements AttendanceInterface
                     totalStudentGrid.smoothScrollToPosition(currentPosition+1);//Scroll the position if it is currently invisible
                 }
 
-            }
+                    for (AttendanceCheck check : attendanceChecks) {
+                        if (check.getRoll() == Integer.parseInt(attendanceGridModels.get(currentPosition).getRollNo())) {
+                            Log.d("match", "mathcing " + currentPosition);
+
+                            flag=!flag;
+                            //attendanceLayoutManager.setPresent(false);
+                            //color changing of the button
+                            attendanceGridModels.get(currentPosition).setStudentStatus(0);
+                            attendanceChecks.set(currentPosition, new AttendanceCheck(flag, attendanceChecks.get(currentPosition).getRoll()));
+                            attendanceGridAdapter.notifyDataSetChanged();
+                        }
+
+                    }
+                }
+
+
         });
 
         attendanceAbsent.setOnClickListener(new View.OnClickListener() {
@@ -172,26 +181,36 @@ public class Attendance extends AppCompatActivity implements AttendanceInterface
 
               //  Toast.makeText(getApplicationContext(),flag+ " "+Integer.parseInt(attendanceGridModels.get(currentPosition).getRollNo())+"",Toast.LENGTH_SHORT).show();
 
-                if(currentPosition<attendanceGridModels.size()&&scrolled) {
+                if(currentPosition<attendanceGridModels.size()&&scrolled && attendanceChecks.size()<attendanceGridModels.size()) {
                     scrolled=false;
                     Log.d("current pos",currentPosition+"");
                     Log.d("roll ",attendanceGridModels.get(currentPosition).getRollNo());
-//                    for(int i=0;i<attendanceChecks.size();i++){
-//                        if(currentPosition!=attendanceChecks.get(i).getRoll())
-//                            attendanceChecks.add(new AttendanceCheck(flag, Integer.parseInt(attendanceGridModels.get(currentPosition).getRollNo())));
-//
-//                    }
 
-                    attendanceChecks.add(new AttendanceCheck(flag, Integer.parseInt(attendanceGridModels.get(currentPosition).getRollNo())));
 
-                    // attendanceChecks.add(new AttendanceCheck(flag, Integer.parseInt(attendanceGridModels.get(attendanceGridAdapter.getSelectedItem()).getRollNo())));
+                    attendanceChecks.add(new AttendanceCheck(flag, Integer.parseInt(attendanceGridModels.get(attendanceGridAdapter.getSelectedItem()).getRollNo())));
+
 
                     attendanceLayoutManager.setPresent(false);
                     currentRoll.startAnimation(shrink_expand);
                     totalStudentGrid.smoothScrollToPosition(currentPosition+1);
 
                 }
+
+                for(AttendanceCheck check:attendanceChecks) {
+                    if (check.getRoll() == Integer.parseInt(attendanceGridModels.get(currentPosition).getRollNo())) {
+                        Log.d("match", "mathcing " + currentPosition);
+                        int a[]={1,0};
+                        //attendanceLayoutManager.setPresent(true);
+                        flag=!flag;
+                        attendanceGridModels.get(currentPosition).setStudentStatus(1);
+                        attendanceChecks.set(currentPosition, new AttendanceCheck(flag, attendanceChecks.get(currentPosition).getRoll()));
+                        attendanceGridAdapter.notifyDataSetChanged();
+                    }
+
+
+                }
             }
+
         });
             postAttendance.setOnClickListener(new View.OnClickListener() {
             @Override

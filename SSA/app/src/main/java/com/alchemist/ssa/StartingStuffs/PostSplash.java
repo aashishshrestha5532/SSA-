@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.alchemist.ssa.LoginStuffs.ParentDashBoard;
 import com.alchemist.ssa.LoginStuffs.LoginInterface;
 import com.alchemist.ssa.NetworkStuffs.NetworkCallBackInterface;
 import com.alchemist.ssa.NetworkStuffs.NetworkStateChangeDetector;
@@ -196,8 +198,20 @@ public class PostSplash extends AppCompatActivity implements NetworkCallBackInte
     }
 
     public void startUp(){
-        Intent intent=new Intent(getApplicationContext(), LoginInterface.class);
-        startActivity(intent);
+
+        SharedPreferences sharedPreferences=getApplicationContext().getSharedPreferences(getString(R.string.session_key),MODE_PRIVATE);
+
+        Log.d("firstTime",sharedPreferences.getBoolean(getString(R.string.firstTimeLogin),true)+"");
+        if(sharedPreferences.getBoolean(getString(R.string.firstTimeLogin),true)){
+            startActivity(new Intent(getApplicationContext(), LoginInterface.class));
+        }
+        else
+        startActivity(new Intent(getApplicationContext(), ParentDashBoard.class));
+
+        finish();
+
+
+
     }
 
 

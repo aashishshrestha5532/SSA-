@@ -1,8 +1,16 @@
 <resources>
     <string name="app_name">SSA</string>
 
-    <string name="ipaddress">http://192.168.1.113:8000</string>
+    <string name="ipaddress">http://192.168.1.107:8000</string>
     <string name="firebase_token">firebaseToken</string>
     <string name="fcm_key">fcm_key</string>
     <string name="sunday">sunday</string>
+    <string name="session_key">session_key</string>
+    <string name="session_value">session_value</string>
+    <string name="class_id">class_id</string>
+    <string name="section_id">section_id</string>
+    <string name="firstTimeLogin">firstTimeLogin</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
 </resources>
+
