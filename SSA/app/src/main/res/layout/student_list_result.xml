@@ -22,7 +22,7 @@
         android:text="Roll 50"
         />
     <TextView
-        android:layout_marginLeft="25dp"
+        android:layout_marginLeft="20dp"
         android:id="@+id/studentName"
         android:layout_width="135dp"
         android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
         />
 
     <TextView
-        android:layout_marginLeft="25dp"
+        android:layout_marginLeft="20dp"
         android:id="@+id/studentMarks"
         android:textSize="17dp"
         android:layout_width="45dp"
@@ -44,7 +44,7 @@
     <TextView
         android:gravity="center"
         android:textSize="17dp"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="20dp"
         android:id="@+id/studentPos"
         android:layout_width="30dp"
         android:layout_height="wrap_content"

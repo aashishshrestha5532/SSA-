@@ -19,7 +19,7 @@ import com.alchemist.ssa.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StaffDetail extends AppCompatActivity implements SearchInterface{
+public class StaffDetail extends AppCompatActivity{
     private RecyclerView staffRecycleView;
     private List<StaffModel> staffModelList=new ArrayList<>();
     private StaffAdapter staffAdapter;
@@ -36,6 +36,7 @@ public class StaffDetail extends AppCompatActivity implements SearchInterface{
         setSupportActionBar(toolbar);
 
 
+
 //        searchButton=findViewById(R.id.searchButton);
 //        searchButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -49,13 +50,33 @@ public class StaffDetail extends AppCompatActivity implements SearchInterface{
        // staffAdapter.searchEnableInterface(this);
 
         loadResult();
-        addSearchListener(this);
+        searchInterface=new SearchInterface() {
+            @Override
+            public void onSearch(String queryText) {
+                String smallText=queryText.toLowerCase();
+                ArrayList<StaffModel> newlinkModels=new ArrayList<>();
+
+                for(StaffModel linkModel: staffModelList){
+                    //searching by name as well as category
+                    String teacherName=linkModel.getTeacherName();
+                    //String level=linkModel.getLevel();
+                    if(teacherName.contains(queryText)|| teacherName.toLowerCase().contains(smallText)) {
+                        newlinkModels.add(linkModel);
+                    }
+
+
+                }
+                staffAdapter.setFilter(newlinkModels);
+            }
+        };
 
 
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         staffRecycleView.setLayoutManager(linearLayoutManager);
         staffRecycleView.setAdapter(staffAdapter);
+//        staffModelList.clear();
+//        staffAdapter.notifyDataSetChanged();
     }
 
 
@@ -101,6 +122,7 @@ public class StaffDetail extends AppCompatActivity implements SearchInterface{
 
         SearchManager searchManager=(SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView=(SearchView)menuItem.getActionView();
+        searchView.setQueryHint("Enter Staff name");
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -120,25 +142,8 @@ public class StaffDetail extends AppCompatActivity implements SearchInterface{
     }
 
 
-    @Override
-    public void onSearch(String newText) {
-        newText=newText.toLowerCase();
-        ArrayList<StaffModel> newlinkModels=new ArrayList<>();
 
-        for(StaffModel linkModel: newlinkModels){
-            //searching by name as well as category
-            String teacherName=linkModel.getTeacherName();
-            String level=linkModel.getLevel();
-            if(teacherName.contains(newText)||level.contains(newText)){
-                newlinkModels.add(linkModel);
-            }
-
-
-        }
-
-        staffAdapter.setFilter(newlinkModels);
-    }
-    public void addSearchListener(SearchInterface searchInterface) {
+    public void addSearchListener(SearchInterface searchInterace) {
         this.searchInterface=searchInterface;
     }
 }

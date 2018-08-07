@@ -30,6 +30,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.design.widget.TextInputLayout
+        android:visibility="gone"
         android:id="@+id/searchLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -52,6 +53,7 @@
     </android.support.design.widget.TextInputLayout>
 
     <Button
+        android:visibility="gone"
         android:id="@+id/searchButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -80,32 +82,36 @@
 
         <TextView
             android:textSize="17dp"
-            android:layout_width="30dp"
+            android:textStyle="bold"
+            android:layout_width="25dp"
             android:layout_height="wrap_content"
             android:text="roll"
             tools:layout_editor_absoluteX="67dp"
             tools:layout_editor_absoluteY="120dp" />
         <TextView
+            android:textStyle="bold"
             android:textSize="17dp"
-            android:layout_width="135dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
+            android:layout_marginLeft="20dp"
             android:text="Name"
             tools:layout_editor_absoluteX="67dp"
             tools:layout_editor_absoluteY="120dp" />
         <TextView
             android:textSize="17dp"
-            android:layout_width="50dp"
+            android:textStyle="bold"
+            android:layout_width="65dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
-            android:text="Marks"
+            android:layout_marginLeft="20dp"
+            android:text="Percent"
             tools:layout_editor_absoluteX="67dp"
             tools:layout_editor_absoluteY="120dp" />
         <TextView
+            android:textStyle="bold"
             android:textSize="17dp"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
+            android:layout_marginLeft="20dp"
             android:text="Position"
             tools:layout_editor_absoluteX="67dp"
             tools:layout_editor_absoluteY="120dp" />
@@ -116,7 +122,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:text="-------------------------------------------------------------------------------"
+                android:text="----------------------------------------------------------------------------------------"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -130,7 +136,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="35dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

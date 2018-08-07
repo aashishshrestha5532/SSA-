@@ -11,16 +11,20 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alchemist.ssa.OtherStuffs.SearchInterface;
 import com.alchemist.ssa.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StudentResultAdapter extends RecyclerView.Adapter<StudentResultAdapter.ViewHolder> {
+    private SearchInterface searchInterface;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView studentProfile;
         public TextView studentName,studentPos,studentMarks,studentRollNo;
         private Context context;
+
 
         public ViewHolder(final Context context, View itemView) {
             super(itemView);
@@ -82,8 +86,19 @@ public class StudentResultAdapter extends RecyclerView.Adapter<StudentResultAdap
 
     }
 
+    public void setFilter(List<StudentResultModel> models){
+        studentResultModels=new ArrayList<>();
+        studentResultModels.addAll(models);
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return studentResultModels.size();
     }
+
+    public void addSearch(SearchInterface searchInterface){
+        this.searchInterface=searchInterface;
+    }
+
 }

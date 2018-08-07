@@ -67,12 +67,7 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.ViewHolder> 
 
     }
 
-    public List<StaffModel> getFilter(){
-        return staffModelList;
-    }
-    public void searchEnableInterface(SearchInterface searchInterface){
-        this.searchInterface=searchInterface;
-    }
+
 
 }
 

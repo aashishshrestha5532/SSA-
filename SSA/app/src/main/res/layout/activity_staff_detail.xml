@@ -82,7 +82,7 @@
 
             <TextView
                 android:textSize="17dp"
-                android:layout_width="25dp"
+                android:layout_width="22dp"
                 android:layout_height="wrap_content"
                 android:text="SN"
                 tools:layout_editor_absoluteX="67dp"

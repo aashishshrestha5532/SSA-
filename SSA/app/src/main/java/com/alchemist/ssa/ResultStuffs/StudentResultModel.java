@@ -3,14 +3,15 @@ package com.alchemist.ssa.ResultStuffs;
 public class StudentResultModel {
     private String name;
     private int rollNo;
-    private int position;
-    private double marks;
+    private int position,id;
+    private String marks;
 
-    public StudentResultModel(String name, int position, int rollNo, double marks) {
+    public StudentResultModel(int id,String name, int position, int rollNo, String marks) {
         this.name = name;
         this.rollNo = rollNo;
         this.marks=marks;
         this.position=position;
+        this.id=id;
     }
 
     public String getName() {
@@ -32,7 +33,11 @@ public class StudentResultModel {
         return position;
     }
 
-    public double getMarks() {
+    public String getMarks() {
         return marks;
+    }
+
+    public int getId() {
+        return id;
     }
 }
