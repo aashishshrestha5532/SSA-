@@ -68,10 +68,13 @@
         <activity
             android:name=".StartingStuffs.PostSplash"
             android:noHistory="true" />
-        <activity android:name=".LoginStuffs.ParentDashBoard"></activity>
-        <activity android:name=".ResultStuffs.StudentResult"/>
+        <activity android:name=".LoginStuffs.ParentDashBoard" />
+        <activity android:name=".ResultStuffs.StudentResult" />
+        <activity android:name=".ResultStuffs.ResultDetailActivity" />
+        <activity android:name=".PerformanceStuffs.Performance" />
+        <activity android:name=".OtherStuffs.StaffDetail">
 
-        <activity android:name=".ResultStuffs.ResultDetailActivity"/>
+        </activity>
     </application>
 
 </manifest>

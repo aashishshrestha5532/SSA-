@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.alchemist.ssa.EventStuffs.Event;
 import com.alchemist.ssa.NetworkStuffs.StringResource;
+import com.alchemist.ssa.OtherStuffs.StaffDetail;
 import com.alchemist.ssa.R;
 import com.alchemist.ssa.ResultStuffs.StudentResult;
 import com.alchemist.ssa.ScheduleStuffs.Schedule;
@@ -80,12 +81,17 @@ public class ParentDashBoard extends AppCompatActivity {
 
                 int id=item.getItemId();
 
+
                 if(id==R.id.nav_logout){
                     SharedPreferences sharedPreferences=getApplicationContext().getSharedPreferences(getString(R.string.session_key),MODE_PRIVATE);
                     SharedPreferences.Editor editor=sharedPreferences.edit();
                     editor.putBoolean(getString(R.string.firstTimeLogin),true);
                     editor.commit();
                     startActivity(new Intent(getApplicationContext(),LoginInterface.class));
+                }
+
+                else if(id==R.id.staffList){
+                    startActivity(new Intent(getApplicationContext(),StaffDetail.class));
                 }
                 return true;
             }

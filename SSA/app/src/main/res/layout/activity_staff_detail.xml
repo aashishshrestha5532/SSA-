@@ -20,8 +20,8 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <android.support.v7.widget.Toolbar
-            android:background="@drawable/backgradient"
             android:id="@+id/resultToolBar"
+            android:background="@drawable/backgradient"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize">
 
@@ -31,6 +31,7 @@
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/searchLayout"
+        android:visibility="gone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginRight="8dp"
@@ -44,7 +45,7 @@
             android:id="@+id/search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Student Name"
+            android:hint="Teacher Name"
             android:nextFocusUp="@id/search"
             android:nextFocusLeft="@id/search"
             android:padding="10dp"
@@ -52,11 +53,12 @@
     </android.support.design.widget.TextInputLayout>
 
     <Button
+        android:visibility="gone"
         android:id="@+id/searchButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="Button"
+        android:text="search"
         app:layout_constraintBottom_toBottomOf="@+id/searchLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
@@ -78,37 +80,37 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        <TextView
-            android:textSize="17dp"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:text="roll"
-            tools:layout_editor_absoluteX="67dp"
-            tools:layout_editor_absoluteY="120dp" />
-        <TextView
-            android:textSize="17dp"
-            android:layout_width="135dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
-            android:text="Name"
-            tools:layout_editor_absoluteX="67dp"
-            tools:layout_editor_absoluteY="120dp" />
-        <TextView
-            android:textSize="17dp"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
-            android:text="Marks"
-            tools:layout_editor_absoluteX="67dp"
-            tools:layout_editor_absoluteY="120dp" />
-        <TextView
-            android:textSize="17dp"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
-            android:text="Position"
-            tools:layout_editor_absoluteX="67dp"
-            tools:layout_editor_absoluteY="120dp" />
+            <TextView
+                android:textSize="17dp"
+                android:layout_width="25dp"
+                android:layout_height="wrap_content"
+                android:text="SN"
+                tools:layout_editor_absoluteX="67dp"
+                tools:layout_editor_absoluteY="120dp" />
+            <TextView
+                android:textSize="17dp"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="Name"
+                tools:layout_editor_absoluteX="67dp"
+                tools:layout_editor_absoluteY="120dp" />
+            <TextView
+                android:textSize="17dp"
+                android:layout_width="95dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:text="Phone"
+                tools:layout_editor_absoluteX="67dp"
+                tools:layout_editor_absoluteY="120dp" />
+            <TextView
+                android:textSize="17dp"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="35dp"
+                android:text="Level"
+                tools:layout_editor_absoluteX="67dp"
+                tools:layout_editor_absoluteY="120dp" />
         </LinearLayout>
         <LinearLayout
             android:orientation="horizontal"
@@ -126,11 +128,11 @@
 
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/searchStudentResult"
+        android:id="@+id/staffRecycleView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

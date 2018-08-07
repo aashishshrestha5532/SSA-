@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="horizontal"
+
+    android:layout_marginTop="20dp"
+    android:layout_marginLeft="20dp"
+    android:background="@drawable/custom_grid_ripple">
+
+    <TextView
+        android:textSize="17dp"
+        android:id="@+id/sn"
+        android:layout_width="15dp"
+        android:layout_height="wrap_content"
+
+
+        android:text="1"
+        />
+    <TextView
+        android:layout_marginLeft="25dp"
+        android:id="@+id/teacherName"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="true"
+        android:textSize="17dp"
+        android:text="Ram Kharel"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        />
+
+    <TextView
+        android:layout_marginLeft="25dp"
+        android:id="@+id/contactNo"
+        android:textSize="17dp"
+        android:layout_width="95dp"
+        android:textColor="@color/colorPrimary"
+        android:layout_height="wrap_content"
+        android:text="9814142541"
+        />
+
+    <TextView
+        android:gravity="center"
+        android:textSize="17dp"
+        android:layout_marginLeft="20dp"
+        android:id="@+id/teacherPos"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+
+        android:text="Primary level"
+        />
+
+
+
+</LinearLayout>
