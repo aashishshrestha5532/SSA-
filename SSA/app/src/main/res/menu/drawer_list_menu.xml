@@ -20,12 +20,10 @@
             android:title="Staff list"
             android:icon="@drawable/contact"/>
 
-        <item android:title="Terms and conditions"/>
-
 
         <item
             android:icon="@drawable/assisgnment"
-            android:title="setting"
+            android:title="policies"
             />
         <item
             android:id="@+id/nav_logout"

@@ -1,13 +1,17 @@
 package com.alchemist.ssa.LoginStuffs;
 
 import android.animation.ObjectAnimator;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -50,10 +54,12 @@ public class ParentDashBoard extends AppCompatActivity {
     TextView absentDays;
     CardView scheduleCard,noticeCard,resultCard;
     private static String att_path= StringResource.getUrl()+"/provideAttendance";
+    private static String delete_url=StringResource.getUrl()+"/deleteToken";
     private DrawerLayout eventDrawerLayout;
     private NavigationView navigationView;
     private ActionBarDrawerToggle drawerToggle;
     private CollapsingToolbarLayout collapsingToolbarLayout;
+    private ConstraintLayout constraintLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +67,11 @@ public class ParentDashBoard extends AppCompatActivity {
         progressBar=findViewById(R.id.progress);
         eventDrawerLayout=findViewById(R.id.drawerLayout);
         navigationView=findViewById(R.id.navview);
+        progressDialog=new ProgressDialog(this);
+        progressDialog.setMessage("logging out...");
+        progressDialog.setCancelable(false);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        constraintLayout=findViewById(R.id.constrainLayout);
 
         Toolbar toolbar=findViewById(R.id.toolbar);
         toolbar.setTitle("Dashboard");
@@ -71,6 +82,7 @@ public class ParentDashBoard extends AppCompatActivity {
         collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.white));
 
         absentDays=findViewById(R.id.presentDay);
+
         scheduleCard=findViewById(R.id.scheduleCardView);
         noticeCard=findViewById(R.id.noticeCard);
         resultCard=findViewById(R.id.resultCard);
@@ -81,13 +93,28 @@ public class ParentDashBoard extends AppCompatActivity {
 
                 int id=item.getItemId();
 
-
                 if(id==R.id.nav_logout){
-                    SharedPreferences sharedPreferences=getApplicationContext().getSharedPreferences(getString(R.string.session_key),MODE_PRIVATE);
-                    SharedPreferences.Editor editor=sharedPreferences.edit();
-                    editor.putBoolean(getString(R.string.firstTimeLogin),true);
-                    editor.commit();
-                    startActivity(new Intent(getApplicationContext(),LoginInterface.class));
+
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(ParentDashBoard.this);
+                    builder1.setTitle("Alert")
+                            .setMessage("Do you sure want to logout?")
+                    .setCancelable(false)
+                    .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            SharedPreferences sharedPreferences=getApplicationContext().getSharedPreferences(getString(R.string.session_key),MODE_PRIVATE);
+                            showDialog();
+                           deleteToken();
+                        }
+                    }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    }).show();
+
+
+
                 }
 
                 else if(id==R.id.staffList){
@@ -100,15 +127,11 @@ public class ParentDashBoard extends AppCompatActivity {
             @Override
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-//                status=0;
-                Log.d("hca", "onDrawerClosed: Drawer Closed");
             }
 
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                //status=2;
-                Log.d("hca", "onDrawerOpened: Drawer Opened");
             }
 
         };
@@ -211,6 +234,56 @@ public class ParentDashBoard extends AppCompatActivity {
         if(progressDialog.isShowing()){
             progressDialog.dismiss();
         }
+
+    }
+    public void deleteToken(){
+
+        //Toast.makeText(getApplicationContext(),sharedPreferences.getInt(getString(R.string.session_value), 1)+"",Toast.LENGTH_SHORT);
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, delete_url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("delete",response.toString());
+                hideDialog();
+
+                try {
+                    JSONObject jsonObject=new JSONObject(response);
+                    boolean flag=jsonObject.getBoolean("delete");
+
+                    if(flag){
+                        SharedPreferences sharedPreferences=getApplicationContext().getSharedPreferences(getString(R.string.session_key),MODE_PRIVATE);
+                        SharedPreferences.Editor editor=sharedPreferences.edit();
+                        editor.putBoolean(getString(R.string.firstTimeLogin),true);
+                        editor.commit();
+                        startActivity(new Intent(getApplicationContext(),LoginInterface.class));
+                    }
+                    else{
+                        Snackbar snackbar=Snackbar.make(constraintLayout,"Couldnot empty token",Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params=new HashMap<>();
+                SharedPreferences sharedPreferences=getApplicationContext().getSharedPreferences(getString(R.string.session_key),MODE_PRIVATE);
+
+                params.put("id",sharedPreferences.getInt(getString(R.string.session_value), 1)+"");
+                params.put("code","s");
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue=Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
 
     }
 

@@ -4,6 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -17,6 +18,7 @@ import android.view.animation.LayoutAnimationController;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -48,17 +50,19 @@ public class Attendance extends AppCompatActivity implements AttendanceInterface
     private RecyclerView totalStudentGrid;
     private final int ANIMATION_TIME=4000;
     private Animation shrink_expand;
+    private ProgressBar progressBar;
     private boolean scrolled=true;
     private TextView studentName;
     private TextView student_performance,student_total,student_absent,student_remarks;
     private int count=0,offset=0;
     private static final String attendance_url= StringResource.getUrl()+"/showStudent";
+    private static final String add_attendance_url=StringResource.getUrl()+"/addAttendance";
     private Spinner cSpinner,sSppiner;
     private boolean flag;
     private List<AttendanceGridModel> attendanceGridModels=new ArrayList<>();
     private List<AttendanceCheck> attendanceChecks=new ArrayList<>();
     private String classes[]={"class 1","class 2","class 3","class 4","class 5","class 6","class 7","class 8","class 9","class 10"};
-    private String sections[]={"section A","section B","section C"};
+    private String sections[]={"section 1","section 2","section 3"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +70,7 @@ public class Attendance extends AppCompatActivity implements AttendanceInterface
         attendanceParent=findViewById(R.id.attendanceParent);
         cSpinner=findViewById(R.id.classSpinner);
         sSppiner=findViewById(R.id.sectionSpinner);
+        progressBar=findViewById(R.id.progressCircle);
 
         postAttendance=findViewById(R.id.postAttendance);
 
@@ -110,7 +115,12 @@ public class Attendance extends AppCompatActivity implements AttendanceInterface
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 attendanceGridModels.clear();
                 String class_id= cSpinner.getSelectedItem().toString();
+
+                progressBar.setIndeterminate(true);
+                progressBar.setVisibility(View.VISIBLE);
                 loadStudents(class_id);
+
+
 //                notify();
 
             }
@@ -215,14 +225,36 @@ public class Attendance extends AppCompatActivity implements AttendanceInterface
             postAttendance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                int i=0;
+                StringBuilder stringBuilder=new StringBuilder();
+                int i=0,j=0;
+                JSONObject jsonData=new JSONObject();
                 while(i<attendanceChecks.size()){
-                    Log.d("datas",attendanceChecks.get(i).getRoll()  +  "  status - "+attendanceChecks.get(i).isFlag());
-                    i++;
+                    try {
+                        stringBuilder.append(String.valueOf(attendanceChecks.get(i).getRoll()).length());
+                        stringBuilder.append(attendanceChecks.get(i).getRoll());
+                        if(!attendanceChecks.get(i).isFlag()){
+                            stringBuilder.append(1);
+                        }
+                        else
+                            stringBuilder.append(0);
+
+                        //stringBuilder.append(attendanceChecks.get(i).isFlag());
+                        jsonData.put("count"+String.valueOf(i+1),attendanceChecks.get(i).getRoll());
+                        Log.d("datas",attendanceChecks.get(i).getRoll()  +  "  status - "+attendanceChecks.get(i).isFlag());
+                        i++;
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    //we have to clear all the color after the attendance
+
+
+
                 }
+                Log.d("jsonSize",jsonData.toString());
+
                 Log.d("size",attendanceChecks.size()+"");
+               // sendJson(stringBuilder.toString());
+                sendJson(stringBuilder.toString(),attendanceChecks.size());
                 attendanceChecks.clear();
                 //checking whether the attendance is complete or not
 //                if()
@@ -288,6 +320,8 @@ public class Attendance extends AppCompatActivity implements AttendanceInterface
         StringRequest stringRequest=new StringRequest(Request.Method.POST, attendance_url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                progressBar.setIndeterminate(false);
+                progressBar.setVisibility(View.GONE);
 
                 try {
                     int i=0;
@@ -322,8 +356,7 @@ public class Attendance extends AppCompatActivity implements AttendanceInterface
                String sec_id=sSppiner.getSelectedItem().toString();
                 Map<String,String> params=new HashMap<>();
                 params.put("class_id",c_id.substring(5));
-                params.put("section_id","1");
-
+                params.put("section_id",sec_id.substring(7));
                 return params;
             }
         };
@@ -332,33 +365,6 @@ public class Attendance extends AppCompatActivity implements AttendanceInterface
 
         RequestQueue requestQueue= Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
-//        AttendanceGridModel model=new AttendanceGridModel("Susan Thapa","1",30,22,"good","good");
-//        attendanceGridModels.add(model);
-//
-//        model=new AttendanceGridModel("Rajesh Thapa","2",30,23,"good","good");
-//        attendanceGridModels.add(model);
-//
-//        model=new AttendanceGridModel("Talank Baral","3",30,23,"good","good");
-//
-//        attendanceGridModels.add(model);
-//
-//        model=new AttendanceGridModel("Rajeshsa Thapa","4",30,21,"good","good");
-//
-//        attendanceGridModels.add(model);
-//
-//        model=new AttendanceGridModel("Elton Thapa","5",30,23,"good","good");
-//
-//        attendanceGridModels.add(model);
-//
-//        model=new AttendanceGridModel("Hari Thapa","6",30,19,"average","average");
-//
-//        attendanceGridModels.add(model);
-//        model=new AttendanceGridModel("Hari Thapa","7",30,19,"average","average");
-//
-//        attendanceGridModels.add(model);
-//
-//
-//        attendanceGridAdapter.notifyDataSetChanged();
 
     }
 
@@ -367,7 +373,48 @@ public class Attendance extends AppCompatActivity implements AttendanceInterface
     }
 
 
+    public void sendJson(final String dataa, final int asize){
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, add_attendance_url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    Log.d("response",response.toString());
+                    JSONObject jsonObject=new JSONObject(response);
+                    boolean insert=jsonObject.getBoolean("insert");
+                    if(insert){
+                        Snackbar snackbar=Snackbar.make(attendanceParent,"Attendance is posted successfully",Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                    }
+                    else {
+                        Snackbar snackbar=Snackbar.make(attendanceParent,"Sorry! Attendance is interuptted",Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
 
+            }
+        }){
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params=new HashMap<>();
+                params.put("datas",dataa);
+                params.put("size",String.valueOf(asize));
+                params.put("class_id",cSpinner.getSelectedItem().toString().substring(5));
+                params.put("section_id",sSppiner.getSelectedItem().toString().substring(7));
+                return params;
+
+            }
+
+        };
+        RequestQueue requestQueue=Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
+    }
 
     @Override
     public void onResume() {

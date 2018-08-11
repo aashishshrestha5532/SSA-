@@ -1,5 +1,6 @@
 package com.alchemist.ssa.EventStuffs;
 
+import android.app.ProgressDialog;
 import android.content.ServiceConnection;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -41,6 +42,7 @@ public class NormalEventFragment extends Fragment {
    RecyclerView recyclerView;
    EventAdapter eventAdapter;
    private boolean isLoading=false;
+   private ProgressDialog progressDialog;
     private static final String event_url= StringResource.getUrl()+"/events";
    private String TAG="response";
    private int thresholdLoad=2;
@@ -63,6 +65,12 @@ public class NormalEventFragment extends Fragment {
         recyclerView=v.findViewById(R.id.normalList);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity());
          progressBar=v.findViewById(R.id.progressLoad);
+         progressDialog=new ProgressDialog(getActivity());
+         progressDialog.setCancelable(false);
+         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+         progressDialog.setMessage("loading");
+         showDialog();
+
         System.out.print("The system is created!!!");
 
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -112,6 +120,7 @@ public class NormalEventFragment extends Fragment {
             @Override
             public void onResponse(String response) {
                 try {
+                    hideDialog();
                     int count=0;
                     JSONObject jsonObject=new JSONObject(response);
                     JSONArray jsonArray=jsonObject.getJSONArray("event_list");
@@ -224,5 +233,19 @@ public class NormalEventFragment extends Fragment {
 
 
     }
+    private void showDialog(){
+        if(!progressDialog.isShowing()){
+            progressDialog.show();
+        }
+
+
+    }
+    private void hideDialog(){
+        if(progressDialog.isShowing()){
+            progressDialog.dismiss();
+        }
+
+    }
+
 }
 

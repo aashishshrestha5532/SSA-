@@ -25,9 +25,11 @@
         <activity android:name=".EventStuffs.Event" />
         <activity android:name=".EventStuffs.EventDetail" />
         <activity android:name=".AttendanceStuffs.Attendance" />
-        <activity android:name=".LoginStuffs.Login" />
         <activity android:name=".ScheduleStuffs.Schedule" />
-        <activity android:name=".LoginStuffs.LoginInterface" />
+        <activity
+            android:name=".LoginStuffs.LoginInterface"
+            android:noHistory="true"
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".FireBaseStuffs.FirebaseInstanceIdServ"
@@ -54,33 +56,39 @@
         <activity
             android:name=".StartingStuffs.SplashScreen"
             android:noHistory="true"
-            android:theme="@style/SplashTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>5
-
-        </activity>
+            android:theme="@style/SplashTheme" />
         <activity
             android:name=".StartingStuffs.WelcomeActivity"
             android:noHistory="true" />
         <activity
             android:name=".StartingStuffs.PostSplash"
-            android:noHistory="true" />
-        <activity android:name=".LoginStuffs.ParentDashBoard"  />
-        <activity android:name=".ResultStuffs.StudentResult"
+            android:noHistory="true"
+            android:screenOrientation="portrait" />
+        <activity android:name=".LoginStuffs.ParentDashBoard" />
+        <activity
+            android:name=".ResultStuffs.StudentResult"
             android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.app.searchable"
-                android:resource="@xml/searchable">
-            </meta-data>
+                android:resource="@xml/searchable" />
         </activity>
         <activity android:name=".ResultStuffs.ResultDetailActivity" />
         <activity android:name=".PerformanceStuffs.Performance" />
-        <activity android:name=".OtherStuffs.StaffDetail">
+        <activity android:name=".OtherStuffs.StaffDetail" />
+        <activity
+            android:name=".LoginStuffs.TeacherDashBoard"
+            android:label="@string/title_activity_teacher_dash_board" />
+        <activity android:name=".ResultStuffs.CheckResultBoard" />
+        <activity android:name=".LoginStuffs.AddEvent" />
+        <activity android:name=".ScheduleStuffs.AddSchedule"></activity>
+        <activity android:name=".AdminStuffs.AdminHome">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+        <activity android:name=".AdminStuffs.EventList"></activity>
     </application>
 
 </manifest>

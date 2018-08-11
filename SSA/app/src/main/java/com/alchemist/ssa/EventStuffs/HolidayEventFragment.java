@@ -1,5 +1,6 @@
 package com.alchemist.ssa.EventStuffs;
 
+import android.app.ProgressDialog;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -40,6 +41,7 @@ public class HolidayEventFragment extends Fragment {
     private int thresholdLoad=2;
     ProgressBar progressBar;
     private int count=0;
+    private ProgressDialog progressDialog;
     private static final String event_url= StringResource.getUrl()+"/events";
    // private static final String event_url="http://192.168.1.103:8000/events";
 
@@ -59,6 +61,11 @@ public class HolidayEventFragment extends Fragment {
         recyclerView=v.findViewById(R.id.holidayList);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity());
         progressBar=v.findViewById(R.id.progressLoad);
+        progressDialog=new ProgressDialog(getActivity());
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Loading..");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        showDialog();
 
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         // DividerItemDecoration decoration=new DividerItemDecoration(getActivity(),linearLayoutManager.getOrientation());
@@ -106,6 +113,7 @@ public class HolidayEventFragment extends Fragment {
             @Override
             public void onResponse(String response) {
                 try {
+                    hideDialog();
                     int count=0;
                     JSONObject jsonObject=new JSONObject(response);
                     JSONArray jsonArray=jsonObject.getJSONArray("event_list");
@@ -200,5 +208,19 @@ public class HolidayEventFragment extends Fragment {
 
 
     }
+    private void showDialog(){
+        if(!progressDialog.isShowing()){
+            progressDialog.show();
+        }
+
+
+    }
+    private void hideDialog(){
+        if(progressDialog.isShowing()){
+            progressDialog.dismiss();
+        }
+
+    }
+
 }
 

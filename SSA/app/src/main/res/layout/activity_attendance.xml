@@ -50,7 +50,10 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:layout_marginTop="8dp"
+        android:backgroundTint="@color/floatattColor"
         android:src="@drawable/attendance_absent"
+        app:borderWidth="0dp"
+        app:elevation="6dp"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -65,7 +68,10 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:layout_marginTop="8dp"
+        android:backgroundTint="@color/floatattColor"
         android:src="@drawable/attendance_present"
+        app:borderWidth="0dp"
+        app:elevation="6dp"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -78,13 +84,14 @@
         android:id="@+id/totalStudentGrid"
         android:layout_width="match_parent"
         android:layout_height="82dp"
-        android:background="@color/colorAccent"
+        android:background="@drawable/backgradient"
         app:layout_constraintBottom_toTopOf="@+id/bigCenterButtonLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
+
 
     </android.support.v7.widget.RecyclerView>
 
@@ -112,14 +119,17 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:backgroundTint="@color/floatattColor"
         android:clickable="true"
-        android:src="@drawable/update"
+        app:borderWidth="0dp"
+        app:elevation="6dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/attendancePresent"
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toEndOf="@+id/attendanceAbsent"
         app:layout_constraintTop_toBottomOf="@+id/bigCenterButtonLayout"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/update" />
 
     <Spinner
         android:id="@+id/classSpinner"
@@ -174,30 +184,33 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical">
-            <LinearLayout
-                android:weightSum="2"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/student_performance"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Performance - good" />
-                <ImageView
-                    android:layout_weight="1"
-                    android:src="@drawable/attendance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
             <LinearLayout
-                android:weightSum="3"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/student_performance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:text="Performance - good" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/attendance" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
 
                 <TextView
                     android:id="@+id/student_total_attendance"
@@ -206,56 +219,82 @@
                     android:layout_marginLeft="20dp"
                     android:layout_weight="1"
                     android:text="TotalAttendance 21/30" />
+
                 <ImageView
-                    android:layout_weight="1"
-                    android:src="@drawable/absent"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/absent" />
             </LinearLayout>
+
             <LinearLayout
-                android:weightSum="2"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
 
                 <TextView
                     android:id="@+id/student_normal_attendance"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Absent since - 2 days" />
-                <ImageView
+                    android:layout_marginLeft="20dp"
                     android:layout_weight="1"
-                    android:src="@drawable/attendance"
+                    android:text="Absent since - 2 days" />
+
+                <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/attendance" />
             </LinearLayout>
+
             <LinearLayout
-                android:weightSum="2"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
 
                 <TextView
                     android:id="@+id/student_remarks"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Remarks - good" />
-                <ImageView
+                    android:layout_marginLeft="20dp"
                     android:layout_weight="1"
-                    android:src="@drawable/attendance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
+                    android:text="Remarks - good" />
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/attendance" />
+            </LinearLayout>
 
 
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="46dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/sectionSpinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/totalStudentGrid"
+        app:layout_constraintVertical_bias="0.916">
+
+        <ProgressBar
+            android:id="@+id/progressCircle"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true" />
+    </LinearLayout>
 
 
 </android.support.constraint.ConstraintLayout>

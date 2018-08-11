@@ -1,8 +1,11 @@
 package com.alchemist.ssa.ResultStuffs;
 
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -40,17 +43,29 @@ public class StudentResult extends AppCompatActivity {
     private StudentResultAdapter studentResultAdapter;
     private Button searchButton;
     private SearchInterface searchInterface;
+    Bundle bundle;
+    ProgressDialog progressDialog;
     private static String class_url= StringResource.getUrl()+"/viewClassResult";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_result);
+        bundle=getIntent().getExtras();
 
         searchStudentResult=findViewById(R.id.searchStudentResult);
+        progressDialog=new ProgressDialog(this);
+        progressDialog.setMessage("Loading..");
+        progressDialog.setCancelable(false);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        showDialog();
 
         searchButton=findViewById(R.id.searchButton);
         Toolbar toolbar= findViewById(R.id.resultToolBar);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            toolbar.setTitle("Student Results");
+            toolbar.setTitleTextColor(Color.WHITE);
+        }
 
         searchInterface=new SearchInterface() {
             @Override
@@ -79,11 +94,6 @@ public class StudentResult extends AppCompatActivity {
        loadResult();
 
         studentResultAdapter=new StudentResultAdapter(this,studentResultModels);
-        //studentResultAdapter.addSearch(this);
-        //addSearchListener(searchInterface);
-       // addSearchListener(this);
-
-
 
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -102,6 +112,7 @@ public class StudentResult extends AppCompatActivity {
         StringRequest stringRequest=new StringRequest(Request.Method.POST, class_url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                hideDialog();
                 JSONObject jsonObject= null;
                 try {
                     int i=0;
@@ -110,7 +121,6 @@ public class StudentResult extends AppCompatActivity {
                     jsonObject = new JSONObject(response);
                     JSONArray jsonArray=jsonObject.getJSONArray("student_list");
                     while(i<jsonArray.length()){
-
                         JSONObject jsonObject1=jsonArray.getJSONObject(i);
                         int id=jsonObject1.getInt("id");
                         String st_name=jsonObject1.getString("student_name");
@@ -147,12 +157,21 @@ public class StudentResult extends AppCompatActivity {
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                SharedPreferences sharedPreferences=getApplicationContext().getSharedPreferences(getString(R.string.session_key),MODE_PRIVATE);
-                Map<String,String> params=new HashMap<>();
-                params.put("class_id",sharedPreferences.getInt(getString(R.string.class_id),1)+"");
-                params.put("section_id",sharedPreferences.getInt(getString(R.string.section_id),1)+"");
-                params.put("terminal","1");
 
+                Map<String, String> params = new HashMap<>();
+                if (bundle != null) {
+                    params.put("section_id",bundle.getString("section_id"));
+                    params.put("class_id",bundle.getString("class_id"));
+                    params.put("terminal",bundle.getString("terminal"));
+                } else {
+                    SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.session_key), MODE_PRIVATE);
+
+                    params.put("class_id", sharedPreferences.getInt(getString(R.string.class_id), 1) + "");
+                    params.put("section_id", sharedPreferences.getInt(getString(R.string.section_id), 1) + "");
+                    params.put("terminal", "1");
+
+
+                }
                 return params;
             }
         };
@@ -201,6 +220,20 @@ public class StudentResult extends AppCompatActivity {
             }
         });
         return true;
+    }
+
+    private void showDialog(){
+        if(!progressDialog.isShowing()){
+            progressDialog.show();
+        }
+
+
+    }
+    private void hideDialog(){
+        if(progressDialog.isShowing()){
+            progressDialog.dismiss();
+        }
+
     }
 
 

@@ -7,19 +7,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/drawerLayout"
-
-    >
+    android:id="@+id/drawerLayout">
 <android.support.constraint.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/constrainLayout"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="0dp"
+    android:layout_height="match_parent"
     tools:context="com.alchemist.ssa.LoginStuffs.ParentDashBoard">
 
     <android.support.design.widget.AppBarLayout
@@ -73,9 +72,9 @@
                     android:id="@+id/presentDay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="52dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="55dp"
                     android:textColor="@color/white"
                     android:textSize="25sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -102,7 +101,7 @@
     <android.support.v4.widget.NestedScrollView
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         xmlns:android="http://schemas.android.com/apk/res/android">
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -110,7 +109,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            tools:context="com.elton.practicee2.MainActivity"
+            tools:context="com.alchemist.ssa.LoginStuffs.ParentDashBoard"
             android:padding="10dp"
             tools:layout_editor_absoluteY="81dp">
 
@@ -137,7 +136,7 @@
                             android:layout_height="64dp"
                             android:padding="10dp"
                             android:background="@drawable/circularp"
-                            android:src="@drawable/money"
+                            app:srcCompat="@drawable/money"
 
                             />
                         <TextView
@@ -181,7 +180,7 @@
                             android:layout_height="64dp"
                             android:padding="10dp"
                             android:background="@drawable/circularpink"
-                            android:src="@drawable/results"
+                            app:srcCompat="@drawable/results"
 
                             />
                         <TextView
@@ -231,7 +230,7 @@
                             android:layout_height="64dp"
                             android:padding="10dp"
                             android:background="@drawable/circulargreen"
-                            android:src="@drawable/assisgnment"
+                            app:srcCompat="@drawable/assisgnment"
 
                             />
                         <TextView
@@ -273,7 +272,7 @@
                             android:layout_height="64dp"
                             android:padding="10dp"
                             android:background="@drawable/circularyellow"
-                            android:src="@drawable/attendancee"
+                            app:srcCompat="@drawable/attendancee"
 
                             />
                         <TextView
@@ -324,7 +323,7 @@
                             android:layout_height="64dp"
                             android:padding="10dp"
                             android:background="@drawable/circulargreen"
-                            android:src="@drawable/notice"
+                            app:srcCompat="@drawable/notice"
 
                             />
                         <TextView
@@ -367,7 +366,7 @@
                             android:layout_height="64dp"
                             android:padding="10dp"
                             android:background="@drawable/circularorange"
-                            android:src="@drawable/schedule"
+                            app:srcCompat="@drawable/schedule"
 
                             />
                         <TextView

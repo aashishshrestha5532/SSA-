@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.alchemist.ssa.LoginStuffs.ParentDashBoard;
 import com.alchemist.ssa.LoginStuffs.LoginInterface;
+import com.alchemist.ssa.LoginStuffs.TeacherDashBoard;
 import com.alchemist.ssa.NetworkStuffs.NetworkCallBackInterface;
 import com.alchemist.ssa.NetworkStuffs.NetworkStateChangeDetector;
 import com.alchemist.ssa.NetworkStuffs.StringResource;
@@ -200,6 +201,7 @@ public class PostSplash extends AppCompatActivity implements NetworkCallBackInte
     public void startUp(){
 
         SharedPreferences sharedPreferences=getApplicationContext().getSharedPreferences(getString(R.string.session_key),MODE_PRIVATE);
+        SharedPreferences sharedPreferences2=getApplicationContext().getSharedPreferences(getString(R.string.teacher_session_key),MODE_PRIVATE);
 
         Log.d("firstTime",sharedPreferences.getBoolean(getString(R.string.firstTimeLogin),true)+"");
         if(sharedPreferences.getBoolean(getString(R.string.firstTimeLogin),true)){
@@ -207,6 +209,13 @@ public class PostSplash extends AppCompatActivity implements NetworkCallBackInte
         }
         else
         startActivity(new Intent(getApplicationContext(), ParentDashBoard.class));
+
+
+        if(sharedPreferences2.getBoolean(getString(R.string.teacherFirstLogin),true)){
+            startActivity(new Intent(getApplicationContext(),LoginInterface.class));
+        }
+        else
+            startActivity(new Intent(getApplicationContext(), TeacherDashBoard.class));
 
         finish();
 

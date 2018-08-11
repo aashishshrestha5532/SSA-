@@ -29,7 +29,7 @@ public class StudentResultAdapter extends RecyclerView.Adapter<StudentResultAdap
         public ViewHolder(final Context context, View itemView) {
             super(itemView);
             this.context=context;
-            studentProfile=itemView.findViewById(R.id.studentProfile);
+            //studentProfile=itemView.findViewById(R.id.studentProfile);
             studentName=itemView.findViewById(R.id.studentName);
             studentPos=itemView.findViewById(R.id.studentPos);
             studentMarks=itemView.findViewById(R.id.studentMarks);
@@ -38,9 +38,7 @@ public class StudentResultAdapter extends RecyclerView.Adapter<StudentResultAdap
                 @Override
                 public void onClick(View view) {
 
-                    Intent intent=new Intent(context,ResultDetailActivity.class);
-                    intent.putExtra("name",studentName.getText().toString());
-                    context.startActivity(intent);
+
 
 //                    Pair<View,String> pair= Pair.create((View)studentProfile,"studentProfile");
 //                    Intent intent=new Intent(context,ResultDetailActivity.class);
@@ -71,11 +69,24 @@ public class StudentResultAdapter extends RecyclerView.Adapter<StudentResultAdap
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.studentRollNo.setText(studentResultModels.get(position).getRollNo()+"");
         holder.studentPos.setText(studentResultModels.get(position).getPosition()+"");
         holder.studentMarks.setText(studentResultModels.get(position).getMarks()+"");
         holder.studentName.setText(studentResultModels.get(position).getName());
+
+
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context,ResultDetailActivity.class);
+                intent.putExtra("name",studentResultModels.get(position).getName());
+                intent.putExtra("student_roll",studentResultModels.get(position).getId()+"");
+                intent.putExtra("percentage",studentResultModels.get(position).getMarks());
+                context.startActivity(intent);
+            }
+        });
 
         if(position>lastPosition) {
             Animation animation= AnimationUtils.loadAnimation(context, R.anim.student_grid_anim);

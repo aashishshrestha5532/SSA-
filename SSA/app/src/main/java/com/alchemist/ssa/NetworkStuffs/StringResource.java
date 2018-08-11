@@ -6,7 +6,7 @@ package com.alchemist.ssa.NetworkStuffs;
 
 public class StringResource {
 
-    private static String url;
+    private static String url,username,email;
     private static boolean isNetworkAvailable;
 
 
@@ -25,6 +25,21 @@ public class StringResource {
 
     public static void setIsNetworkAvailable(boolean isNetworkAvailable) {
         StringResource.isNetworkAvailable = isNetworkAvailable;
+    }
+    public static void setUsername(String username){
+        StringResource.username=username;
+    }
+
+    public static String getUsername() {
+        return username;
+    }
+
+    public static void setEmail(String email) {
+        StringResource.email = email;
+    }
+
+    public static String getEmail() {
+        return email;
     }
 }
 
