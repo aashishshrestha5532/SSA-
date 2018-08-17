@@ -44,7 +44,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/animate_button_design"
+        android:background="@drawable/animate_button_d"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?selectableItemBackground"

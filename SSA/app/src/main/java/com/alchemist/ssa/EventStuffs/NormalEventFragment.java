@@ -124,10 +124,10 @@ public class NormalEventFragment extends Fragment {
                     int count=0;
                     JSONObject jsonObject=new JSONObject(response);
                     JSONArray jsonArray=jsonObject.getJSONArray("event_list");
-                    if(jsonArray.length()==0) {
-                        eventAdapter.setIsEnd(true);
-                        eventAdapter.notifyItemChanged(recyclerView.getLayoutManager().getItemCount());
-                    }
+//                    if(jsonArray.length()==0) {
+//                        eventAdapter.setIsEnd(true);
+//                        eventAdapter.notifyItemChanged(recyclerView.getLayoutManager().getItemCount());
+//                    }
                     while(count<jsonArray.length()){
                         Log.d(TAG,response.toString());
                         JSONObject jsonObject1=jsonArray.getJSONObject(count);
@@ -135,7 +135,7 @@ public class NormalEventFragment extends Fragment {
                         String event_type=jsonObject1.getString("type");
                         String date=jsonObject1.getString("date");
                         if(event_type.equals("normal"))
-                        list.add(new EventModel(event_title,date,event_type, BitmapFactory.decodeResource(getResources(),R.drawable.logoholiday)));
+                        list.add(new EventModel(event_title,date,event_type, BitmapFactory.decodeResource(getResources(),R.mipmap.admin45)));
                         count++;
 
                     }
@@ -246,6 +246,7 @@ public class NormalEventFragment extends Fragment {
         }
 
     }
+
 
 }
 

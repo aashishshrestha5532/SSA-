@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
@@ -17,13 +18,18 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
+import com.alchemist.ssa.AdminStuffs.AdminHome;
 import com.alchemist.ssa.AdminStuffs.EventList;
+import com.alchemist.ssa.NetworkStuffs.StringResource;
 import com.alchemist.ssa.R;
 import com.android.volley.AuthFailureError;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -47,8 +53,8 @@ public class AddEvent extends AppCompatActivity {
     private ConstraintLayout constraintLayout;
     private String event_type;
     private Bundle bundle;
-    private static String addEvent_url= "http://192.168.1.107:8000"+"/addEvent";
-    private static String updateEvent_url="http://192.168.1.107:8000"+"/updateEvent";
+    private static String addEvent_url= StringResource.getUrl()+"/addEvent";
+    private static String updateEvent_url=StringResource.getUrl()+"/updateEvent";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -242,7 +248,8 @@ public class AddEvent extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                handleVolleyError(error);
+                hideDialog();
             }
         }){
 
@@ -286,5 +293,25 @@ public class AddEvent extends AppCompatActivity {
         }
 
     }
+    public void handleVolleyError(VolleyError error){
+        if(error instanceof TimeoutError){
+            showListError("Server TimeOut");
 
+        }
+        else if(error instanceof ServiceConnection){
+            showListError("Server Connection Lost");
+        }
+        else if(error instanceof NoConnectionError){
+            showListError("No Internet Connection");
+        }
+    }
+
+    public void showListError(String error){
+        Toast.makeText(getApplicationContext(),error,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(), AdminHome.class));
+    }
 }

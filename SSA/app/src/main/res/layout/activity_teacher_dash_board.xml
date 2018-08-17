@@ -102,109 +102,121 @@
 
 
             </android.support.design.widget.AppBarLayout>
-            <android.support.v4.widget.NestedScrollView
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+
+            <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/nestedScrollView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                xmlns:android="http://schemas.android.com/apk/res/android">
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
                 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     xmlns:tools="http://schemas.android.com/tools"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    tools:context="com.elton.practicee2.MainActivity"
                     android:padding="10dp"
+                    tools:context="com.elton.practicee2.MainActivity"
                     tools:layout_editor_absoluteY="81dp">
 
                     <LinearLayout
-                        android:orientation="horizontal"
-                        android:gravity="center"
-                        android:clipToPadding="false"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
                         <android.support.v7.widget.CardView
                             android:id="@+id/attenanceCard"
                             android:layout_width="160dp"
                             android:layout_height="190dp"
-                            android:foreground="?android:attr/selectableItemBackground"
+                            android:layout_margin="10dp"
                             android:clickable="true"
-                            android:layout_margin="10dp">
+                            android:foreground="?android:attr/selectableItemBackground">
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:orientation="vertical"
-                                android:gravity="center">
+                                android:gravity="center"
+                                android:orientation="vertical">
+
                                 <ImageView
                                     android:layout_width="64dp"
                                     android:layout_height="64dp"
-                                    android:padding="10dp"
                                     android:background="@drawable/circularyellow"
+                                    android:padding="10dp"
                                     app:srcCompat="@drawable/attendancee"
 
                                     />
+
                                 <TextView
-                                    android:text="Attendance"
-                                    android:layout_marginTop="10dp"
                                     android:layout_width="wrap_content"
-                                    android:textStyle="bold"
-                                    android:layout_height="wrap_content" />
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:text="Attendance"
+                                    android:textStyle="bold" />
+
                                 <View
                                     android:layout_width="match_parent"
                                     android:layout_height="1dp"
-                                    android:background="@color/colorPrimary"
                                     android:layout_margin="10dp"
-                                    />
+                                    android:background="@color/colorPrimary" />
+
                                 <TextView
-                                    android:gravity="center"
-                                    android:text="Take attendance"
-                                    android:padding="5dp"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content" />
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:padding="5dp"
+                                    android:text="Take attendance" />
 
 
                             </LinearLayout>
 
                         </android.support.v7.widget.CardView>
+
                         <android.support.v7.widget.CardView
                             android:id="@+id/resultCard"
-                            android:clickable="true"
                             android:layout_width="160dp"
                             android:layout_height="190dp"
-                            android:foreground="?android:attr/selectableItemBackground"
-                            android:layout_margin="10dp">
+                            android:layout_margin="10dp"
+                            android:clickable="true"
+                            android:foreground="?android:attr/selectableItemBackground">
+
                             <LinearLayout
                                 android:id="@+id/res"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:orientation="vertical"
-                                android:gravity="center">
+                                android:gravity="center"
+                                android:orientation="vertical">
+
                                 <ImageView
                                     android:layout_width="64dp"
                                     android:layout_height="64dp"
-                                    android:padding="10dp"
                                     android:background="@drawable/circularpink"
+                                    android:padding="10dp"
                                     app:srcCompat="@drawable/results"
 
                                     />
+
                                 <TextView
-                                    android:text="Results"
-                                    android:layout_marginTop="10dp"
                                     android:layout_width="wrap_content"
-                                    android:textStyle="bold"
-                                    android:layout_height="wrap_content" />
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:text="Results"
+                                    android:textStyle="bold" />
+
                                 <View
                                     android:layout_width="match_parent"
                                     android:layout_height="1dp"
-                                    android:background="@color/colorPrimary"
                                     android:layout_margin="10dp"
-                                    />
+                                    android:background="@color/colorPrimary" />
+
                                 <TextView
-                                    android:gravity="center"
-                                    android:text="Check results"
-                                    android:padding="5dp"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content" />
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:padding="5dp"
+                                    android:text="Check results" />
 
 
                             </LinearLayout>
@@ -212,93 +224,104 @@
                         </android.support.v7.widget.CardView>
 
                     </LinearLayout>
+
                     <LinearLayout
-                        android:orientation="horizontal"
-                        android:gravity="center"
-                        android:clipToPadding="false"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
                         <android.support.v7.widget.CardView
                             android:id="@+id/lessonCard"
                             android:layout_width="160dp"
                             android:layout_height="190dp"
+                            android:layout_margin="10dp"
                             android:clickable="true"
-                            android:foreground="?android:attr/selectableItemBackground"
-                            android:layout_margin="10dp">
+                            android:foreground="?android:attr/selectableItemBackground">
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:orientation="vertical"
-                                android:gravity="center">
+                                android:gravity="center"
+                                android:orientation="vertical">
+
                                 <ImageView
                                     android:layout_width="64dp"
                                     android:layout_height="64dp"
-                                    android:padding="10dp"
                                     android:background="@drawable/circulargreen"
+                                    android:padding="10dp"
                                     app:srcCompat="@drawable/assisgnment"
 
                                     />
+
                                 <TextView
-                                    android:text="Lesson plan"
-                                    android:layout_marginTop="10dp"
                                     android:layout_width="wrap_content"
-                                    android:textStyle="bold"
-                                    android:layout_height="wrap_content" />
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:text="Lesson plan"
+                                    android:textStyle="bold" />
+
                                 <View
                                     android:layout_width="match_parent"
                                     android:layout_height="1dp"
-                                    android:background="@color/colorPrimary"
                                     android:layout_margin="10dp"
-                                    />
+                                    android:background="@color/colorPrimary" />
+
                                 <TextView
-                                    android:gravity="center"
-                                    android:text="Make lesson plan"
-                                    android:padding="5dp"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content" />
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:padding="5dp"
+                                    android:text="Make lesson plan" />
 
 
                             </LinearLayout>
 
                         </android.support.v7.widget.CardView>
+
                         <android.support.v7.widget.CardView
                             android:id="@+id/performanceCard"
-                            android:clickable="true"
                             android:layout_width="160dp"
                             android:layout_height="190dp"
-                            android:foreground="?android:attr/selectableItemBackground"
-                            android:layout_margin="10dp">
+                            android:layout_margin="10dp"
+                            android:clickable="true"
+                            android:foreground="?android:attr/selectableItemBackground">
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:orientation="vertical"
-                                android:gravity="center">
+                                android:gravity="center"
+                                android:orientation="vertical">
+
                                 <ImageView
                                     android:layout_width="64dp"
                                     android:layout_height="64dp"
-                                    android:padding="10dp"
                                     android:background="@drawable/circularp"
-                                    app:srcCompat="@drawable/wifi"
+                                    android:padding="10dp"
+                                    app:srcCompat="@drawable/perform"
 
                                     />
+
                                 <TextView
-                                    android:text="Performance"
-                                    android:layout_marginTop="10dp"
                                     android:layout_width="wrap_content"
-                                    android:textStyle="bold"
-                                    android:layout_height="wrap_content" />
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:text="Performance"
+                                    android:textStyle="bold" />
+
                                 <View
                                     android:layout_width="match_parent"
                                     android:layout_height="1dp"
-                                    android:background="@color/colorPrimary"
                                     android:layout_margin="10dp"
-                                    />
+                                    android:background="@color/colorPrimary" />
+
                                 <TextView
-                                    android:gravity="center"
-                                    android:text="Student's performance"
-                                    android:padding="5dp"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content" />
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:padding="5dp"
+                                    android:text="Student's performance" />
 
 
                             </LinearLayout>
@@ -306,95 +329,104 @@
                         </android.support.v7.widget.CardView>
 
                     </LinearLayout>
+
                     <LinearLayout
-                        android:orientation="horizontal"
-                        android:gravity="center"
-                        android:clipToPadding="false"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
                         <android.support.v7.widget.CardView
-                            android:clickable="true"
                             android:id="@+id/noticeCard"
-                            android:foreground="?android:attr/selectableItemBackground"
                             android:layout_width="160dp"
                             android:layout_height="190dp"
-                            android:layout_margin="10dp">
+                            android:layout_margin="10dp"
+                            android:clickable="true"
+                            android:foreground="?android:attr/selectableItemBackground">
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:orientation="vertical"
-                                android:gravity="center">
+                                android:gravity="center"
+                                android:orientation="vertical">
+
                                 <ImageView
                                     android:layout_width="64dp"
                                     android:layout_height="64dp"
-                                    android:padding="10dp"
                                     android:background="@drawable/circularorange"
+                                    android:padding="10dp"
                                     app:srcCompat="@drawable/notice"
 
                                     />
+
                                 <TextView
-                                    android:text="Notices"
-                                    android:layout_marginTop="10dp"
                                     android:layout_width="wrap_content"
-                                    android:textStyle="bold"
-                                    android:layout_height="wrap_content" />
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:text="Notices"
+                                    android:textStyle="bold" />
+
                                 <View
                                     android:layout_width="match_parent"
                                     android:layout_height="1dp"
-                                    android:background="@color/colorPrimary"
                                     android:layout_margin="10dp"
-                                    />
+                                    android:background="@color/colorPrimary" />
+
                                 <TextView
-                                    android:gravity="center"
-                                    android:text="Check school events"
-                                    android:padding="5dp"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content" />
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:padding="5dp"
+                                    android:text="Check school events" />
 
 
                             </LinearLayout>
 
                         </android.support.v7.widget.CardView>
+
                         <android.support.v7.widget.CardView
-                            android:clickable="true"
                             android:id="@+id/scheduleCardView"
-                            android:foreground="?android:attr/selectableItemBackground"
                             android:layout_width="160dp"
                             android:layout_height="190dp"
-                            android:layout_margin="10dp">
+                            android:layout_margin="10dp"
+                            android:clickable="true"
+                            android:foreground="?android:attr/selectableItemBackground">
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:orientation="vertical"
-                                android:gravity="center">
+                                android:gravity="center"
+                                android:orientation="vertical">
+
                                 <ImageView
                                     android:layout_width="64dp"
                                     android:layout_height="64dp"
-                                    android:padding="10dp"
                                     android:background="@drawable/circulargreen"
+                                    android:padding="10dp"
                                     app:srcCompat="@drawable/schedule"
 
                                     />
+
                                 <TextView
-                                    android:text="Schedule"
-                                    android:layout_marginTop="10dp"
                                     android:layout_width="wrap_content"
-                                    android:textStyle="bold"
-                                    android:layout_height="wrap_content" />
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:text="Schedule"
+                                    android:textStyle="bold" />
+
                                 <View
                                     android:layout_width="match_parent"
                                     android:layout_height="1dp"
-                                    android:background="@color/colorPrimary"
                                     android:layout_margin="10dp"
-                                    />
+                                    android:background="@color/colorPrimary" />
+
                                 <TextView
-                                    android:gravity="center"
-                                    android:text="Know your Routine"
-                                    android:padding="5dp"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content" />
-
-
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:padding="5dp"
+                                    android:text="Know your Routine" />
 
 
                             </LinearLayout>
@@ -408,16 +440,19 @@
 
 
             </android.support.v4.widget.NestedScrollView>
+
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/floatingActionButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/floatattColor"
-                app:borderWidth="0dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="16dp"
                 android:layout_gravity="bottom|right"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/floatattColor"
                 android:clickable="true"
+                app:borderWidth="0dp"
+                app:layout_anchor="@+id/nestedScrollView"
+                app:layout_anchorGravity="right|bottom"
                 app:srcCompat="@drawable/attendancee" />
 
         </android.support.design.widget.CoordinatorLayout>

@@ -43,7 +43,7 @@ public class CheckResultBoard extends AppCompatActivity {
         sectionAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         section_id.setAdapter(sectionAdapter);
 
-        final ArrayAdapter<String> terminalAdapter=new ArrayAdapter<>(this,R.layout.support_simple_spinner_dropdown_item,sections);
+        final ArrayAdapter<String> terminalAdapter=new ArrayAdapter<>(this,R.layout.support_simple_spinner_dropdown_item,terminals);
         sectionAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         terminal.setAdapter(terminalAdapter);
 
@@ -54,7 +54,7 @@ public class CheckResultBoard extends AppCompatActivity {
                 Intent intent=new Intent(getApplicationContext(),StudentResult.class);
                 intent.putExtra("class_id",class_id.getSelectedItem().toString().substring(5));
                 intent.putExtra("section_id",section_id.getSelectedItem().toString().substring(7));
-                intent.putExtra("terminal",terminal.getSelectedItem().toString().substring(7));
+                intent.putExtra("terminal",terminal.getSelectedItem().toString().substring(0,1));
 
                 startActivity(intent);
             }

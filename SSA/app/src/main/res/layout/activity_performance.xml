@@ -2,161 +2,635 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
+    android:id="@+id/pconstraint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PerformanceStuffs.Performance">
+    tools:context="com.alchemist.ssa.PerformanceStuffs.Performance">
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="match_parent">
+
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <android.support.design.widget.AppBarLayout
+        <android.support.v7.widget.CardView
+
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="100dp">
 
-            <android.support.design.widget.CollapsingToolbarLayout
-                android:id="@+id/collapseToolbar"
+
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fitsSystemWindows="true"
-                android:background="@drawable/backgradient"
-                app:collapsedTitleTextAppearance="@color/white"
-                app:contentScrim="@color/colorPrimaryDark"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                android:layout_height="match_parent">
 
-                <android.support.constraint.ConstraintLayout
+
+                <TextView
+                    android:id="@+id/adminName"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    app:layout_collapseMode="parallax">
+                    android:layout_height="26dp"
+                    android:layout_marginTop="36dp"
+                    android:text="Student name"
+                    android:textColor="@color/yellow"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.287"
+                    app:layout_constraintStart_toEndOf="@+id/adminImage"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <ProgressBar
-                        android:id="@+id/progressResult"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="116dp"
-                        android:layout_height="116dp"
-                        android:layout_alignParentBottom="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginLeft="120dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginTop="16dp"
-                        android:background="@drawable/circle"
-                        android:indeterminate="false"
-                        android:max="100"
-                        android:progress="0"
-                        android:progressDrawable="@drawable/animatedcircle"
-                        android:visibility="visible"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/admininstrator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:text="Roll - 10"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.304"
+                    app:layout_constraintStart_toEndOf="@+id/adminImage"
+                    app:layout_constraintTop_toBottomOf="@+id/adminName" />
 
-                    <TextView
-                        android:id="@+id/totalPercent"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="52dp"
-                        android:textColor="@color/white"
-                        android:textSize="20sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.785"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </android.support.constraint.ConstraintLayout>
-
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    app:titleTextColor="@color/white"
-                    android:background="@android:color/transparent"
-                    app:theme="@style/TransTheme"
-                    app:layout_collapseMode="pin"
-                    app:navigationIcon="?android:attr/homeAsUpIndicator">
-
-                </android.support.v7.widget.Toolbar>
+                <ImageView
+                    android:id="@+id/adminImage"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="72dp"
+                    android:layout_marginTop="24dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.055"
+                    app:srcCompat="@drawable/first" />
 
 
-            </android.support.design.widget.CollapsingToolbarLayout>
-        </android.support.design.widget.AppBarLayout>
+            </android.support.constraint.ConstraintLayout>
+        </android.support.v7.widget.CardView>
+
+
+    </android.support.design.widget.AppBarLayout>
 
         <android.support.v4.widget.NestedScrollView
+            android:id="@+id/nestedScroll"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+            app:layout_constraintVertical_bias="1.0">
 
-            <android.support.v7.widget.CardView
-                app:cardCornerRadius="5dp"
-                android:layout_marginTop="15dp"
-                android:padding="10dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="70dp">
-                <LinearLayout
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                <TextView
-                    android:textSize="25sp"
-                    android:textStyle="bold"
-                    android:text="Attendance Report"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                    <TextView
-                        android:id="@+id/attendanceReport"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.555"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                        android:text="good"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/dueamount_card"
+                        android:layout_width="4dp"
+                        android:layout_height="119dp"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground">
+
+                        <android.support.constraint.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/imageView"
+                                android:layout_width="54dp"
+                                android:layout_height="54dp"
+                                android:layout_marginLeft="16dp"
+
+                                android:layout_marginTop="16dp"
+                                android:background="@drawable/circularp"
+                                android:padding="10dp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/attendancee" />
+
+                            <TextView
+                                android:id="@+id/number"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="24dp"
+                                android:text="15/30"
+                                android:textSize="25dp"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.545"
+                                app:layout_constraintStart_toEndOf="@+id/imageView"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/textView6"
+                                android:layout_width="wrap_content"
+                                android:layout_height="19dp"
+                                android:layout_marginBottom="16dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginStart="8dp"
+                                android:text="Attendance"
+                                android:textStyle="normal"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.727"
+                                app:layout_constraintStart_toEndOf="@+id/imageView" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="21dp"
+                                android:layout_marginBottom="14dp"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="40dp"
+                                android:layout_marginTop="2dp"
+                                android:text="Monthly"
+                                android:visibility="gone"
+                                app:layout_constraintBottom_toTopOf="@+id/textView6"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/imageView"
+                                app:layout_constraintTop_toBottomOf="@+id/number" />
+
+
+                        </android.support.constraint.ConstraintLayout>
+
+                    </android.support.v7.widget.CardView>
+
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/teacherCard"
+                        android:layout_width="4dp"
+                        android:layout_height="119dp"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground">
+
+                        <android.support.constraint.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/imageView2"
+                                android:layout_width="54dp"
+                                android:layout_height="54dp"
+                                android:layout_marginLeft="16dp"
+
+                                android:layout_marginTop="16dp"
+                                android:background="@drawable/circularpink"
+                                android:padding="10dp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/results" />
+
+                            <TextView
+                                android:id="@+id/number2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="24dp"
+                                android:text="A-"
+                                android:textSize="25dp"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.396"
+                                app:layout_constraintStart_toEndOf="@+id/imageView2"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/textView7"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="16dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginStart="8dp"
+                                android:text="Result"
+                                android:textStyle="normal"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.72"
+                                app:layout_constraintStart_toStartOf="parent" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="21dp"
+                                android:layout_marginBottom="14dp"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="40dp"
+                                android:layout_marginTop="2dp"
+                                android:text="Total"
+                                android:visibility="gone"
+                                app:layout_constraintBottom_toTopOf="@+id/textView7"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/imageView2"
+                                app:layout_constraintTop_toBottomOf="@+id/number2" />
+
+
+                        </android.support.constraint.ConstraintLayout>
+
+                    </android.support.v7.widget.CardView>
+
+
                 </LinearLayout>
 
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                app:cardCornerRadius="5dp"
-                android:layout_marginTop="15dp"
-                android:padding="10dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_width="match_parent"
-                android:layout_height="70dp">
                 <LinearLayout
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:textSize="25sp"
-                        android:textStyle="bold"
-                        android:text="Attendance Report"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    <TextView
-                        android:id="@+id/marksReport"
 
-                        android:text="good"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/event_card"
+                        android:layout_width="4dp"
+                        android:layout_height="119dp"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground">
+
+                        <android.support.constraint.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/imageView4"
+                                android:layout_width="54dp"
+                                android:layout_height="54dp"
+                                android:layout_marginLeft="16dp"
+
+                                android:layout_marginTop="16dp"
+                                android:background="@drawable/circulargreen"
+                                android:padding="10dp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/event" />
+
+                            <TextView
+                                android:id="@+id/number4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="24dp"
+                                android:text="7/7"
+                                android:textSize="25dp"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.45"
+                                app:layout_constraintStart_toEndOf="@+id/imageView4"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/textView10"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="16dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginStart="8dp"
+                                android:text="Assignment"
+                                android:textStyle="normal"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.346"
+                                app:layout_constraintStart_toEndOf="@+id/imageView4" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="21dp"
+                                android:layout_marginBottom="14dp"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="40dp"
+                                android:layout_marginTop="2dp"
+                                android:text="Total"
+                                android:visibility="gone"
+                                app:layout_constraintBottom_toTopOf="@+id/textView10"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/imageView4"
+                                app:layout_constraintTop_toBottomOf="@+id/number4" />
+
+
+                        </android.support.constraint.ConstraintLayout>
+
+                    </android.support.v7.widget.CardView>
+
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/scheduleCard"
+                        android:layout_width="4dp"
+                        android:layout_height="119dp"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground">
+
+                        <android.support.constraint.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/imageView3"
+                                android:layout_width="54dp"
+                                android:layout_height="54dp"
+                                android:layout_marginLeft="16dp"
+
+                                android:layout_marginTop="16dp"
+                                android:background="@drawable/circularyellow"
+                                android:padding="10dp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/extrac" />
+
+                            <TextView
+                                android:id="@+id/number3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="24dp"
+                                android:text="good"
+                                android:textSize="25dp"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/imageView3"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/textView8"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="24dp"
+                                android:text="Extra"
+                                android:textStyle="normal"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.28"
+                                app:layout_constraintStart_toEndOf="@+id/imageView3"
+                                app:layout_constraintTop_toBottomOf="@+id/number3" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="21dp"
+                                android:layout_marginBottom="14dp"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="40dp"
+                                android:layout_marginTop="2dp"
+                                android:text="Total"
+                                android:visibility="gone"
+                                app:layout_constraintBottom_toTopOf="@+id/textView8"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/imageView3"
+                                app:layout_constraintTop_toBottomOf="@+id/number3" />
+
+
+                        </android.support.constraint.ConstraintLayout>
+
+                    </android.support.v7.widget.CardView>
+
+
+                </LinearLayout>
+                <!--<LinearLayout-->
+
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="horizontal"-->
+                <!--&gt;-->
+
+
+                <!--</LinearLayout>-->
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/duet_card2"
+                        android:layout_width="match_parent"
+                        android:layout_height="74dp"
+                        android:layout_margin="10dp"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground">
+
+                        <android.support.constraint.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+
+                            <TextView
+                                android:id="@+id/textView11"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="24dp"
+                                android:layout_marginTop="8dp"
+                                android:padding="5dp"
+                                android:text="Overall Performance"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.08"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.869" />
+
+                            <ProgressBar
+                                android:id="@+id/ratingprogress"
+                                style="?android:attr/progressBarStyleHorizontal"
+                                android:layout_width="59dp"
+                                android:layout_height="58dp"
+                                android:layout_marginBottom="8dp"
+                                android:layout_marginRight="56dp"
+                                android:layout_marginTop="8dp"
+                                android:background="@drawable/circle"
+                                android:indeterminate="false"
+                                android:max="100"
+                                android:progress="0"
+                                android:progressDrawable="@drawable/animatedpcircle"
+                                android:visibility="visible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.444" />
+
+                            <TextView
+                                android:id="@+id/ratingText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="12dp"
+                                android:text="A"
+                                android:textColor="@color/white"
+                                android:textSize="26dp"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toEndOf="@+id/ratingprogress"
+                                app:layout_constraintHorizontal_bias="0.56"
+                                app:layout_constraintStart_toStartOf="@+id/ratingprogress"
+                                app:layout_constraintTop_toTopOf="@+id/ratingprogress" />
+
+
+                        </android.support.constraint.ConstraintLayout>
+
+                    </android.support.v7.widget.CardView>
+
+
                 </LinearLayout>
 
-            </android.support.v7.widget.CardView>
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/duet_card3"
+                        android:layout_width="match_parent"
+                        android:layout_height="74dp"
+                        android:layout_margin="10dp"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground">
+
+                        <android.support.constraint.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical">
 
 
+                            <TextView
+                                android:id="@+id/textView12"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="24dp"
+                                android:layout_marginTop="8dp"
+                                android:padding="5dp"
+                                android:text="Academic "
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.08"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.869" />
+
+
+                            <TextView
+                                android:id="@+id/ratingText2"
+                                android:layout_width="161dp"
+                                android:layout_height="27dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="24dp"
+                                android:text="Need to work more hard"
+                                android:textSize="16dp"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="1.0"
+                                app:layout_constraintStart_toEndOf="@+id/textView12"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+
+                        </android.support.constraint.ConstraintLayout>
+
+                    </android.support.v7.widget.CardView>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/duet_card4"
+                        android:layout_width="match_parent"
+                        android:layout_height="74dp"
+                        android:layout_margin="10dp"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground">
+
+                        <android.support.constraint.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+
+                            <TextView
+                                android:id="@+id/textView13"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="24dp"
+                                android:layout_marginTop="8dp"
+                                android:padding="5dp"
+                                android:text="Non-Academic : "
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.08"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.869" />
+
+
+                            <TextView
+                                android:id="@+id/ratingText3"
+                                android:layout_width="163dp"
+                                android:layout_height="27dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="24dp"
+                                android:text="Need to work more hard"
+                                android:textSize="16dp"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="1.0"
+                                app:layout_constraintStart_toEndOf="@+id/textView13"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+
+                        </android.support.constraint.ConstraintLayout>
+
+                    </android.support.v7.widget.CardView>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
 
     </android.support.design.widget.CoordinatorLayout>
+
 
 </android.support.constraint.ConstraintLayout>

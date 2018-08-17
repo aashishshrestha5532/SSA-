@@ -1,5 +1,6 @@
 package com.alchemist.ssa.AttendanceStuffs;
 
+import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
@@ -25,9 +26,11 @@ import android.widget.TextView;
 import com.alchemist.ssa.NetworkStuffs.StringResource;
 import com.alchemist.ssa.R;
 import com.android.volley.AuthFailureError;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -57,12 +60,13 @@ public class Attendance extends AppCompatActivity implements AttendanceInterface
     private int count=0,offset=0;
     private static final String attendance_url= StringResource.getUrl()+"/showStudent";
     private static final String add_attendance_url=StringResource.getUrl()+"/addAttendance";
-    private Spinner cSpinner,sSppiner;
+    private Spinner cSpinner,sSppiner,subSpinner;
     private boolean flag;
     private List<AttendanceGridModel> attendanceGridModels=new ArrayList<>();
     private List<AttendanceCheck> attendanceChecks=new ArrayList<>();
     private String classes[]={"class 1","class 2","class 3","class 4","class 5","class 6","class 7","class 8","class 9","class 10"};
     private String sections[]={"section 1","section 2","section 3"};
+    private String subject[]={"Mth101","CMP555","Eng333","MTH121"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +74,7 @@ public class Attendance extends AppCompatActivity implements AttendanceInterface
         attendanceParent=findViewById(R.id.attendanceParent);
         cSpinner=findViewById(R.id.classSpinner);
         sSppiner=findViewById(R.id.sectionSpinner);
+        subSpinner=findViewById(R.id.subjectSpinner);
         progressBar=findViewById(R.id.progressCircle);
 
         postAttendance=findViewById(R.id.postAttendance);
@@ -81,6 +86,10 @@ public class Attendance extends AppCompatActivity implements AttendanceInterface
         final ArrayAdapter<String> sectionAdapter=new ArrayAdapter<>(this,R.layout.support_simple_spinner_dropdown_item,sections);
         sectionAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         sSppiner.setAdapter(sectionAdapter);
+
+        final ArrayAdapter<String> subjectAdapter=new ArrayAdapter<>(this,R.layout.support_simple_spinner_dropdown_item,subject);
+        subjectAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        subSpinner.setAdapter(subjectAdapter);
 
         studentName=findViewById(R.id.studentName);
 
@@ -254,6 +263,8 @@ public class Attendance extends AppCompatActivity implements AttendanceInterface
 
                 Log.d("size",attendanceChecks.size()+"");
                // sendJson(stringBuilder.toString());
+
+                Log.d("StringBuilder",stringBuilder.toString());
                 sendJson(stringBuilder.toString(),attendanceChecks.size());
                 attendanceChecks.clear();
                 //checking whether the attendance is complete or not
@@ -352,11 +363,11 @@ public class Attendance extends AppCompatActivity implements AttendanceInterface
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
 
-
                String sec_id=sSppiner.getSelectedItem().toString();
                 Map<String,String> params=new HashMap<>();
                 params.put("class_id",c_id.substring(5));
                 params.put("section_id",sec_id.substring(7));
+                params.put("sub_id",subSpinner.getSelectedItem().toString());
                 return params;
             }
         };
@@ -396,7 +407,9 @@ public class Attendance extends AppCompatActivity implements AttendanceInterface
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                handleVolleyError(error);
+                progressBar.setVisibility(View.GONE);
+                progressBar.setIndeterminate(false);
             }
         }){
 
@@ -407,6 +420,7 @@ public class Attendance extends AppCompatActivity implements AttendanceInterface
                 params.put("size",String.valueOf(asize));
                 params.put("class_id",cSpinner.getSelectedItem().toString().substring(5));
                 params.put("section_id",sSppiner.getSelectedItem().toString().substring(7));
+                params.put("sub_id",subSpinner.getSelectedItem().toString());
                 return params;
 
             }
@@ -415,6 +429,24 @@ public class Attendance extends AppCompatActivity implements AttendanceInterface
         RequestQueue requestQueue=Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
     }
+    public void handleVolleyError(VolleyError error){
+        if(error instanceof TimeoutError){
+            showListError("Server TimeOut");
+
+        }
+        else if(error instanceof ServiceConnection){
+            showListError("Server Connection Lost");
+        }
+        else if(error instanceof NoConnectionError){
+            showListError("No Internet Connection");
+        }
+    }
+
+    public void showListError(String error){
+        Snackbar snackbar=Snackbar.make(attendanceParent,error,Snackbar.LENGTH_LONG);
+        snackbar.show();
+    }
+
 
     @Override
     public void onResume() {

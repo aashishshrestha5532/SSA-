@@ -7,6 +7,8 @@
     <string name="sunday">sunday</string>
     <string name="session_key">session_key</string>
     <string name="session_value">session_value</string>
+    <string name="parent_email"></string>
+    <string name="student_name">student_name</string>
     <string name="teacher_session">teacher_session</string>
     <string name="class_id">class_id</string>
     <string name="teacher_session_key">teacher_session_key</string>
@@ -15,6 +17,11 @@
     <string name="teacherFirstLogin">teacherFirstLogin</string>
     <string name="section_id">section_id</string>
     <string name="firstTimeLogin">firstTimeLogin</string>
+    <string name="admin_session">admin_session</string>
+    <string name="admin_email">admin_email</string>
+    <string name="admin_id">admin_id</string>
+    <string name="admin_name">admin_name</string>
+    <string name="adminFirstTimeLogin">adminFirstTimeLogin</string>
     <string name="open">open</string>
     <string name="close">close</string>
     <string name="title_activity_teacher_dash_board">TeacherDashBoard</string>

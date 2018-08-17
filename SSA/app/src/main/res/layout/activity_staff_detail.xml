@@ -82,9 +82,9 @@
 
             <TextView
                 android:textSize="17dp"
-                android:layout_width="22dp"
+                android:layout_width="24dp"
                 android:layout_height="wrap_content"
-                android:text="SN"
+                android:text="Sn"
                 tools:layout_editor_absoluteX="67dp"
                 tools:layout_editor_absoluteY="120dp" />
             <TextView
@@ -108,7 +108,7 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="35dp"
-                android:text="Level"
+                android:text="Post"
                 tools:layout_editor_absoluteX="67dp"
                 tools:layout_editor_absoluteY="120dp" />
         </LinearLayout>

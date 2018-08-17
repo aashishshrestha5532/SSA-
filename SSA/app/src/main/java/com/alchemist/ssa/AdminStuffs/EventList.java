@@ -3,6 +3,7 @@ package com.alchemist.ssa.AdminStuffs;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
@@ -16,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.widget.Toast;
 
+import com.alchemist.ssa.NetworkStuffs.StringResource;
 import com.alchemist.ssa.R;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -40,8 +42,8 @@ public class EventList extends AppCompatActivity {
     private ConstraintLayout constraintLayout;
     List<EventModelData> list=new ArrayList<>();
     private ProgressDialog progressDialog;
-    private static final String event_url= "http://192.168.1.107:8000"+"/events";
-    private static final String delete_url="http://192.168.1.107:8000"+"/deleteEvent";
+    private static final String event_url= StringResource.getUrl()+"/events";
+    private static final String delete_url=StringResource.getUrl()+"/deleteEvent";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +69,7 @@ public class EventList extends AppCompatActivity {
         loadEventList();
         recyclerView.setAdapter(eventListAdapter);
 
-        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT | ItemTouchHelper.DOWN | ItemTouchHelper.UP) {
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT ) {
 
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
@@ -200,4 +202,9 @@ public class EventList extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+
+        startActivity(new Intent(getApplicationContext(),AdminHome.class));
+    }
 }

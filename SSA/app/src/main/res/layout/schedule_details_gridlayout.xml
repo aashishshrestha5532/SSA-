@@ -7,69 +7,86 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/scheduleCardView"
-        android:layout_width="320dp"
-        android:layout_height="145dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="8dp"
-        app:cardMaxElevation="4dp"
-        app:cardPreventCornerOverlap="false"
+        android:layout_width="334dp"
+        android:layout_height="95dp"
+        android:layout_marginLeft="15dp"
+        app:cardCornerRadius="0dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:layout_width="442dp"
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:weightSum="3"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="80dp">
 
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:src="@mipmap/schedulelist"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
-                android:drawablePadding="5dp"
-                android:drawableLeft="@drawable/subject"
                 android:id="@+id/txtSubjectName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="258dp"
+                android:layout_height="29dp"
                 android:layout_margin="5dp"
+                android:layout_marginTop="8dp"
                 android:paddingLeft="20dp"
-                android:text="SubjectName" />
+                android:text="SubjectName"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/imageView6"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:drawablePadding="5dp"
-                android:drawableLeft="@drawable/clock"
                 android:id="@+id/txtSubjectTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="179dp"
+                android:layout_height="25dp"
                 android:layout_margin="5dp"
+                android:layout_marginTop="5dp"
                 android:paddingLeft="20dp"
-                android:text="Time" />
+                android:text="Time"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.29"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtSubjectName" />
 
             <TextView
-                android:drawablePadding="5dp"
-                android:drawableLeft="@drawable/teacher"
                 android:id="@+id/txtTeacherName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="257dp"
+                android:layout_height="26dp"
                 android:layout_margin="5dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
                 android:paddingLeft="20dp"
-                android:text="Teacher" />
+                android:text="Teacher"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.584"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/txtSubjectTime"
+                app:layout_constraintVertical_bias="1.0" />
 
             <TextView
-                android:drawablePadding="5dp"
-                android:drawableLeft="@drawable/period"
                 android:id="@+id/txtClassName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
+                android:drawableLeft="@drawable/period"
+                android:drawablePadding="5dp"
                 android:paddingLeft="20dp"
-                android:text="Class" />
-        </LinearLayout>
+                android:text="Class"
+                android:visibility="gone" />
+        </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 </android.support.constraint.ConstraintLayout>

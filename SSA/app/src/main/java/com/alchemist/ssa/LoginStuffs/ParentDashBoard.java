@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -29,13 +30,16 @@ import android.widget.TextView;
 import com.alchemist.ssa.EventStuffs.Event;
 import com.alchemist.ssa.NetworkStuffs.StringResource;
 import com.alchemist.ssa.OtherStuffs.StaffDetail;
+import com.alchemist.ssa.PerformanceStuffs.Performance;
 import com.alchemist.ssa.R;
 import com.alchemist.ssa.ResultStuffs.StudentResult;
 import com.alchemist.ssa.ScheduleStuffs.Schedule;
 import com.android.volley.AuthFailureError;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -52,10 +56,11 @@ public class ParentDashBoard extends AppCompatActivity {
 
     ProgressDialog progressDialog;
     TextView absentDays;
-    CardView scheduleCard,noticeCard,resultCard;
+    CardView scheduleCard,noticeCard,resultCard,performanceCard;
     private static String att_path= StringResource.getUrl()+"/provideAttendance";
     private static String delete_url=StringResource.getUrl()+"/deleteToken";
     private DrawerLayout eventDrawerLayout;
+    private TextView username,email;
     private NavigationView navigationView;
     private ActionBarDrawerToggle drawerToggle;
     private CollapsingToolbarLayout collapsingToolbarLayout;
@@ -72,6 +77,9 @@ public class ParentDashBoard extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         constraintLayout=findViewById(R.id.constrainLayout);
+        username=navigationView.getHeaderView(0).findViewById(R.id.profile);
+        email=navigationView.getHeaderView(0).findViewById(R.id.email);
+        loadUserProfile();
 
         Toolbar toolbar=findViewById(R.id.toolbar);
         toolbar.setTitle("Dashboard");
@@ -86,6 +94,7 @@ public class ParentDashBoard extends AppCompatActivity {
         scheduleCard=findViewById(R.id.scheduleCardView);
         noticeCard=findViewById(R.id.noticeCard);
         resultCard=findViewById(R.id.resultCard);
+        performanceCard=findViewById(R.id.performanceCard);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -162,6 +171,12 @@ public class ParentDashBoard extends AppCompatActivity {
             }
         });
 
+        performanceCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), Performance.class));
+            }
+        });
 
         //loadAttendance(class_id,section_id,user_id);
 
@@ -183,6 +198,8 @@ public class ParentDashBoard extends AppCompatActivity {
                     float present=(Integer.parseInt(presentDays)*100) / (Integer.parseInt(totalDays));
                     Log.d("present",present+"");
                     absentDays.setText((int)(present)+" %");
+                    StringResource.setPresent(presentDays);
+                    StringResource.setTotal(totalDays);
 
                     Animation absentAnimation= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.absent_days_animation);
 
@@ -267,7 +284,7 @@ public class ParentDashBoard extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                handleVolleyError(error);
             }
         }){
 
@@ -286,6 +303,34 @@ public class ParentDashBoard extends AppCompatActivity {
         requestQueue.add(stringRequest);
 
     }
+
+    private void loadUserProfile() {
+
+        SharedPreferences sharedPreferences=getApplicationContext().getSharedPreferences(getString(R.string.session_key),MODE_PRIVATE);
+
+        username.setText(sharedPreferences.getString(getString(R.string.student_name),""));
+        email.setText(sharedPreferences.getString(getString(R.string.parent_email),""));
+    }
+
+    public void handleVolleyError(VolleyError error){
+        hideDialog();
+        if(error instanceof TimeoutError){
+            showListError("Server TimeOut");
+
+        }
+        else if(error instanceof ServiceConnection){
+            showListError("Server Connection Lost");
+        }
+        else if(error instanceof NoConnectionError){
+            showListError("No Internet Connection");
+        }
+    }
+
+    public void showListError(String error){
+        Snackbar snackbar=Snackbar.make(constraintLayout,error,Snackbar.LENGTH_LONG);
+        snackbar.show();
+    }
+
 
 
 }

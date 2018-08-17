@@ -20,7 +20,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginBottom="30dp"
         android:paddingTop="5dp"
-        app:srcCompat="@drawable/money"
+        app:srcCompat="@mipmap/student"
         tools:ignore="VectorDrawableCompat" />
 
 

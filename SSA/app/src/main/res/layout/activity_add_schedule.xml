@@ -80,7 +80,7 @@
             android:id="@+id/itime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Date" />
+            android:hint="Start time" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -99,7 +99,7 @@
             android:id="@+id/ftime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="time" />
+            android:hint="End time" />
     </android.support.design.widget.TextInputLayout>
 
         <RadioGroup

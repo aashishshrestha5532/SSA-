@@ -16,6 +16,7 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.alchemist.ssa.AdminStuffs.AdminHome;
 import com.alchemist.ssa.LoginStuffs.ParentDashBoard;
 import com.alchemist.ssa.LoginStuffs.LoginInterface;
 import com.alchemist.ssa.LoginStuffs.TeacherDashBoard;
@@ -202,20 +203,30 @@ public class PostSplash extends AppCompatActivity implements NetworkCallBackInte
 
         SharedPreferences sharedPreferences=getApplicationContext().getSharedPreferences(getString(R.string.session_key),MODE_PRIVATE);
         SharedPreferences sharedPreferences2=getApplicationContext().getSharedPreferences(getString(R.string.teacher_session_key),MODE_PRIVATE);
+        SharedPreferences sharedPreferences3=getApplicationContext().getSharedPreferences(getString(R.string.admin_session),MODE_PRIVATE);
 
         Log.d("firstTime",sharedPreferences.getBoolean(getString(R.string.firstTimeLogin),true)+"");
-        if(sharedPreferences.getBoolean(getString(R.string.firstTimeLogin),true)){
+        Log.d("adminFirstTime",sharedPreferences3.getBoolean(getString(R.string.adminFirstTimeLogin),true)+"");
+        if(sharedPreferences.getBoolean(getString(R.string.firstTimeLogin),true)&& sharedPreferences2.getBoolean(getString(R.string.teacherFirstLogin),true)&& sharedPreferences3.getBoolean(getString(R.string.adminFirstTimeLogin),true)){
             startActivity(new Intent(getApplicationContext(), LoginInterface.class));
         }
-        else
-        startActivity(new Intent(getApplicationContext(), ParentDashBoard.class));
-
-
-        if(sharedPreferences2.getBoolean(getString(R.string.teacherFirstLogin),true)){
-            startActivity(new Intent(getApplicationContext(),LoginInterface.class));
-        }
-        else
+        else {
+            if(!sharedPreferences.getBoolean(getString(R.string.firstTimeLogin),false)){
+                startActivity(new Intent(getApplicationContext(),ParentDashBoard.class));
+            }
+            else if(!sharedPreferences2.getBoolean(getString(R.string.teacherFirstLogin),false))
             startActivity(new Intent(getApplicationContext(), TeacherDashBoard.class));
+
+            else if(!sharedPreferences3.getBoolean(getString(R.string.adminFirstTimeLogin),false)){
+                startActivity(new Intent(getApplicationContext(), AdminHome.class));
+            }
+
+        }
+//        if(sharedPreferences2.getBoolean(getString(R.string.teacherFirstLogin),true)){
+//            startActivity(new Intent(getApplicationContext(),LoginInterface.class));
+//        }
+//        else
+//            startActivity(new Intent(getApplicationContext(), TeacherDashBoard.class));
 
         finish();
 

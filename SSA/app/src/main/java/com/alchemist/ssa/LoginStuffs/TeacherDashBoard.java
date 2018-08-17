@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -26,10 +27,13 @@ import com.alchemist.ssa.NetworkStuffs.StringResource;
 import com.alchemist.ssa.OtherStuffs.StaffDetail;
 import com.alchemist.ssa.R;
 import com.alchemist.ssa.ResultStuffs.CheckResultBoard;
+import com.alchemist.ssa.ScheduleStuffs.Schedule;
 import com.android.volley.AuthFailureError;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -48,7 +52,7 @@ public class TeacherDashBoard extends AppCompatActivity {
     private TextView username,email;
     private ConstraintLayout constraintLayout;
     private ActionBarDrawerToggle drawerToggle;
-    private CardView attendanceCard,eventCard,resultCard;
+    private CardView attendanceCard,eventCard,resultCard,schdeuleCard;
     private static String delete_url= StringResource.getUrl()+"/deleteToken";
     ProgressDialog progressDialog;
 
@@ -69,6 +73,7 @@ public class TeacherDashBoard extends AppCompatActivity {
         attendanceCard=findViewById(R.id.attenanceCard);
         eventCard=findViewById(R.id.noticeCard);
         resultCard=findViewById(R.id.resultCard);
+        schdeuleCard=findViewById(R.id.scheduleCardView);
         username=navigationView.getHeaderView(0).findViewById(R.id.profile);
         email=navigationView.getHeaderView(0).findViewById(R.id.email);
 
@@ -94,6 +99,12 @@ public class TeacherDashBoard extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), CheckResultBoard.class));
+            }
+        });
+        schdeuleCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), Schedule.class));
             }
         });
 
@@ -203,7 +214,10 @@ public class TeacherDashBoard extends AppCompatActivity {
                         SharedPreferences.Editor editor=sharedPreferences.edit();
                         editor.putBoolean(getString(R.string.teacherFirstLogin),true);
                         editor.commit();
-                        startActivity(new Intent(getApplicationContext(),LoginInterface.class));
+                        Intent intent=new Intent(getApplicationContext(),LoginInterface.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NO_HISTORY);
+                        startActivity(intent);
+                       // startActivity(new Intent(getApplicationContext(),LoginInterface.class));
                     }
                     else{
                         Snackbar snackbar=Snackbar.make(constraintLayout,"Couldnot empty token",Snackbar.LENGTH_LONG);
@@ -216,7 +230,7 @@ public class TeacherDashBoard extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                    handleVolleyError(error);
             }
         }){
 
@@ -234,6 +248,25 @@ public class TeacherDashBoard extends AppCompatActivity {
         requestQueue.add(stringRequest);
 
     }
+    public void handleVolleyError(VolleyError error){
+        hideDialog();
+        if(error instanceof TimeoutError){
+            showListError("Server TimeOut");
+
+        }
+        else if(error instanceof ServiceConnection){
+            showListError("Server Connection Lost");
+        }
+        else if(error instanceof NoConnectionError){
+            showListError("No Internet Connection");
+        }
+    }
+
+    public void showListError(String error){
+        Snackbar snackbar=Snackbar.make(constraintLayout,error,Snackbar.LENGTH_LONG);
+        snackbar.show();
+    }
+
 
 
 }

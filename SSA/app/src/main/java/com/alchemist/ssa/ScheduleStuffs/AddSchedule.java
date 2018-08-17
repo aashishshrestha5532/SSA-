@@ -11,7 +11,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +18,7 @@ import android.view.ViewAnimationUtils;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,6 +28,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 
+import com.alchemist.ssa.NetworkStuffs.StringResource;
 import com.alchemist.ssa.R;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -37,11 +38,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AddSchedule extends AppCompatActivity {
@@ -52,18 +56,23 @@ public class AddSchedule extends AppCompatActivity {
     private RadioGroup radioGroup;
     private Button addSchedule,addSubject;
     private boolean isAdded=true;
+    private List<String> subject_list=new ArrayList<>();
     private int status;
     private ConstraintLayout constraintLayout,lowConstrain;
+    ArrayAdapter<String> subAdapter;
     private RadioButton radioButton;
     private ProgressDialog progressDialog;
     private String classes[]={"class 1","class 2","class 3","class 4","class 5","class 6","class 7","class 8","class 9","class 10"};
     private String teachers[]={"teacher 1","teacher 2","teacher 3"};
-    private String subject[]={"MTH105","CMP121","ABR53"};
+    private String subject[]={"Mth101","CMP555","Eng333","MTH121"};
+    private String subject2[]={"MTH505"};
+    private String subject3[]={"OPT111","UP349"};
     private String days[]={"Sun","Mon","Tue","Wed","Thu","Fri"};
     private String sec;
     private FloatingActionButton floatingActionButton;
-    private static String schedule_url="http://192.168.1.107:8000/addSchedule";
-    private static String subject_url="http://192.168.1.107:8000/addSubject";
+    private static String schedule_url= StringResource.getUrl()+"/addSchedule";
+    private static String subject_url=StringResource.getUrl()+"/addSubject";
+    private static String showSubject_url=StringResource.getUrl()+"/showSubject";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +93,18 @@ public class AddSchedule extends AppCompatActivity {
         teacherSpinner=findViewById(R.id.teacherSpinner);
         daySpinner=findViewById(R.id.daySpinner);
         classSpinner=findViewById(R.id.clspinner);
+        cSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                subject_list.clear();
+                showSubject(cSpinner.getSelectedItem().toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         addSchedule=findViewById(R.id.addSchedule);
         addSubject=findViewById(R.id.addS);
@@ -154,7 +175,7 @@ public class AddSchedule extends AppCompatActivity {
         classAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         cSpinner.setAdapter(classAdapter);
 
-        final ArrayAdapter<String> subAdapter=new ArrayAdapter<>(this,R.layout.support_simple_spinner_dropdown_item,subject);
+        subAdapter=new ArrayAdapter<>(this,R.layout.support_simple_spinner_dropdown_item,subject);
         subAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         subSpinner.setAdapter(subAdapter);
 
@@ -325,29 +346,29 @@ public class AddSchedule extends AppCompatActivity {
         }
         view.startAnimation(translateAnimation);
     }
-    @Override
-    public void onBackPressed() {
-        switch (status) {
-            case 0:
-                ActivityCompat.finishAffinity(this);
-                break;
-            case 1:
-                revealAnimation(constraintLayout);
-                Animation rotateAnti=AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_anti);
-                addSchedule.startAnimation(rotateAnti);
-                isAdded=true;
-                status=0;
-                break;
-            case 2:
-                constraintLayout.setVisibility(View.GONE);
-                status=0;
-                break;
-        }
-
-
-
-
-    }
+//    @Override
+//    public void onBackPressed() {
+//        switch (status) {
+//            case 0:
+//                ActivityCompat.finishAffinity(this);
+//                break;
+//            case 1:
+//                revealAnimation(constraintLayout);
+//                Animation rotateAnti=AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_anti);
+//                addSchedule.startAnimation(rotateAnti);
+//                isAdded=true;
+//                status=0;
+//                break;
+//            case 2:
+//                constraintLayout.setVisibility(View.GONE);
+//                status=0;
+//                break;
+//        }
+//
+//
+//
+//
+//    }
     public void addSubjectData(final String subject_code, final String subject_name, final String class_id){
 
         StringRequest stringRequest=new StringRequest(Request.Method.POST, subject_url, new Response.Listener<String>() {
@@ -414,5 +435,44 @@ public class AddSchedule extends AppCompatActivity {
             layout.setErrorEnabled(false);
             return true;
         }
+    }
+
+    public void showSubject(final String class_id){
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, showSubject_url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    int i=0;
+                    Log.d("response",response);
+                    JSONObject jsonObject=new JSONObject(response);
+                    JSONArray jsonArray=jsonObject.getJSONArray("response");
+                    while(i<jsonArray.length()) {
+                        JSONObject jsonObject1=jsonArray.getJSONObject(i);
+                        subject_list.add(jsonObject1.getString("sub_name"));
+                        i++;
+
+                    }
+                    subAdapter.notifyDataSetChanged();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params=new HashMap<>();
+                params.put("class_id",class_id.substring(5));
+                return params;
+            }
+        };
+        RequestQueue requestQueue=Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
     }
 }

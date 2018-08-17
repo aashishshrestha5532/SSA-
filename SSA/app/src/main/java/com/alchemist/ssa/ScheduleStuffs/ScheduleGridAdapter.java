@@ -69,12 +69,14 @@ public class ScheduleGridAdapter  extends RecyclerView.Adapter<ScheduleGridAdapt
 
         holder.dailySchedule.setText(list.get(position).getName());
         if(itemPosition==position){
-            holder.dailySchedule.setBackgroundColor(Color.TRANSPARENT);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                holder.dailySchedule.setBackground(ContextCompat.getDrawable(context,R.drawable.ovalback));
-            }
+            //holder.dailySchedule.setBackgroundColor(Color.TRANSPARENT);
+            holder.dailySchedule.setTextColor(Color.WHITE);
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+//                holder.dailySchedule.setBackground(ContextCompat.getDrawable(context,R.drawable.ovalback));
+//            }
         }
         else {
+            holder.dailySchedule.setTextColor(Color.DKGRAY);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                 holder.dailySchedule.setBackground(ContextCompat.getDrawable(context,R.drawable.rounded_rectangle));
             }

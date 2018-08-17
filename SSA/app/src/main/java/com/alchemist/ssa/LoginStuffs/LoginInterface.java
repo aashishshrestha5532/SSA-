@@ -2,6 +2,7 @@ package com.alchemist.ssa.LoginStuffs;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -17,13 +18,17 @@ import android.view.animation.Transformation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.alchemist.ssa.AdminStuffs.AdminHome;
 import com.alchemist.ssa.NetworkStuffs.StringResource;
 import com.alchemist.ssa.R;
 import com.android.volley.AuthFailureError;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -39,7 +44,7 @@ public class LoginInterface extends AppCompatActivity {
             private ProgressDialog progressDialog;
             private static String login_url= StringResource.getUrl()+"/loginUser";
             ConstraintLayout constraintLayout;
-            private ImageView teacher,student;
+            private ImageView teacher,student,admin;
 
             EditText user,password;
             private String code="";
@@ -48,6 +53,7 @@ public class LoginInterface extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_interface);
         progressDialog=new ProgressDialog(this);
+
 
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Logging in..");
@@ -64,12 +70,14 @@ public class LoginInterface extends AppCompatActivity {
 
         teacher=findViewById(R.id.teacher);
         student=findViewById(R.id.student);
+        admin=findViewById(R.id.admin);
 
         teacher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 code="t";
                 student.setBackgroundColor(Color.TRANSPARENT);
+                admin.setBackgroundColor(Color.TRANSPARENT);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                     teacher.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.circleback));
                     ResizeAnimation resizeAnimation = new ResizeAnimation(teacher,200 );
@@ -84,11 +92,27 @@ public class LoginInterface extends AppCompatActivity {
             public void onClick(View v) {
                 code="s";
                 teacher.setBackgroundColor(Color.TRANSPARENT);
+                admin.setBackgroundColor(Color.TRANSPARENT);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                     student.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.circleback));
                     ResizeAnimation resizeAnimation = new ResizeAnimation(student,180 );
                     resizeAnimation.setDuration(600);
                     student.startAnimation(resizeAnimation);
+
+                }
+            }
+        });
+        admin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                code="a";
+                student.setBackgroundColor(Color.TRANSPARENT);
+                teacher.setBackgroundColor(Color.TRANSPARENT);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    admin.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.circleback));
+                    ResizeAnimation resizeAnimation = new ResizeAnimation(admin, 180);
+                    resizeAnimation.setDuration(600);
+                    admin.startAnimation(resizeAnimation);
 
                 }
             }
@@ -102,8 +126,10 @@ public class LoginInterface extends AppCompatActivity {
                 String key=sharedPreferences.getString(getString(R.string.firebase_token),"");
                 Log.d("f_key",key);
                 //Toast.makeText(getApplicationContext(),key,Toast.LENGTH_SHORT).show();
-                validateUser(user.getText().toString(),password.getText().toString(),code,key);
-
+                if(validateUser(user.getText().toString(),password.getText().toString())) {
+                    verifyUser(user.getText().toString(), password.getText().toString(), code, key);
+                }
+                else Toast.makeText(getApplicationContext(),"Empty fields",Toast.LENGTH_SHORT).show();
                 //Toast.makeText(getApplicationContext(),key,Toast.LENGTH_SHORT).show();
 
 
@@ -116,7 +142,7 @@ public class LoginInterface extends AppCompatActivity {
 
     }
 
-    public void validateUser(final String u, final String p, final String c, final String key){
+    public void verifyUser(final String u, final String p, final String c, final String key){
 
 
         StringRequest stringRequest=new StringRequest(Request.Method.POST, login_url, new Response.Listener<String>() {
@@ -149,10 +175,13 @@ public class LoginInterface extends AppCompatActivity {
                                 editor.putInt(getString(R.string.session_value), user_id);
                                 editor.putInt(getString(R.string.section_id), section_id);
                                 editor.putInt(getString(R.string.class_id), class_id);
+                                editor.putString(getString(R.string.parent_email),jsonObject.getString("email"));
+                                editor.putString(getString(R.string.student_name),jsonObject.getString("name"));
                                 editor.putBoolean(getString(R.string.firstTimeLogin), false);
                                 editor.apply();
 
                                 Intent intent = new Intent(getApplicationContext(), ParentDashBoard.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NO_HISTORY);
                                 startActivity(intent);
 
                             }
@@ -172,6 +201,21 @@ public class LoginInterface extends AppCompatActivity {
                             editor.putBoolean(getString(R.string.teacherFirstLogin),false);
                             editor.apply();
                             Intent intent=new Intent(getApplicationContext(),TeacherDashBoard.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NO_HISTORY);
+                            startActivity(intent);
+                        }
+
+                        else if(l_code.equals("a")){
+                            SharedPreferences sharedPreferences=getApplicationContext().getSharedPreferences(getString(R.string.admin_session),MODE_PRIVATE);
+                            SharedPreferences.Editor editor=sharedPreferences.edit();
+                            Log.d("email",jsonObject.getString("email"));
+                            editor.putInt(getString(R.string.admin_id),user_id);
+                            editor.putString(getString(R.string.admin_name),jsonObject.getString("name"));
+                            editor.putString(getString(R.string.admin_email),jsonObject.getString("email"));
+                            editor.putBoolean(getString(R.string.adminFirstTimeLogin),false);
+                            editor.apply();
+                            Intent intent=new Intent(getApplicationContext(),AdminHome.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NO_HISTORY);
                             startActivity(intent);
                         }
                     }
@@ -191,7 +235,7 @@ public class LoginInterface extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                handleVolleyError(error);
             }
         }){
 
@@ -255,5 +299,34 @@ public class LoginInterface extends AppCompatActivity {
         }
 
     }
+    public void handleVolleyError(VolleyError error){
+        hideDialog();
+        if(error instanceof TimeoutError){
+            showListError("Server TimeOut");
 
+        }
+        else if(error instanceof ServiceConnection){
+            showListError("Server Connection Lost");
+        }
+        else if(error instanceof NoConnectionError){
+            showListError("No Internet Connection");
+        }
+    }
+    public boolean validateUser(String user,String pass){
+        boolean returnType=false;
+        if(!user.isEmpty() && !pass.isEmpty()){
+            returnType=true;
+        }
+        return  returnType;
+    }
+
+    public void showListError(String error){
+        Snackbar snackbar=Snackbar.make(constraintLayout,error,Snackbar.LENGTH_LONG);
+        snackbar.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

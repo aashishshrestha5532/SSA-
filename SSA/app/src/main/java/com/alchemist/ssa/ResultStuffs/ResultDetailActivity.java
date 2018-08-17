@@ -1,7 +1,10 @@
 package com.alchemist.ssa.ResultStuffs;
 
 import android.animation.ObjectAnimator;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -21,13 +24,16 @@ import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alchemist.ssa.NetworkStuffs.StringResource;
 import com.alchemist.ssa.R;
 import com.android.volley.AuthFailureError;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -63,9 +69,15 @@ public class ResultDetailActivity extends AppCompatActivity {
         progressDialog.setMessage("Loading...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setCancelable(false);
-        showDialog();
+
+       SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.session_key), MODE_PRIVATE);
+       SharedPreferences sharedPreferences1=getApplicationContext().getSharedPreferences(getString(R.string.teacher_session_key),MODE_PRIVATE);
+
+
+
+
         Toolbar toolbar=findViewById(R.id.toolbar);
-        toolbar.setTitle(getIntent().getStringExtra("name")+"'s Result");
+        toolbar.setTitle(getIntent().getStringExtra("name"));
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,9 +97,26 @@ public class ResultDetailActivity extends AppCompatActivity {
 
 
         addHeaders("Subjects","Pass Marks","Full Marks","Obtained Marks");
-
-        loadMarks(getIntent().getStringExtra("student_roll"));
-
+        if(String.valueOf(sharedPreferences.getInt(getString(R.string.session_value),1)).equals(getIntent().getStringExtra("student_roll"))|| !sharedPreferences1.getBoolean(getString(R.string.teacherFirstLogin),true)) {
+            showDialog();
+            loadMarks(getIntent().getStringExtra("student_roll"));
+            StringResource.setTotal_marks(getIntent().getStringExtra("percentage"));
+        }
+        else {
+            tableLayout.setVisibility(View.GONE);
+            new AlertDialog.Builder(ResultDetailActivity.this)
+                    .setTitle("School policies")
+                    .setMessage("Sorry We cant display other marks.")
+                    .setCancelable(false)
+                    .setPositiveButton("got it", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Whatever...
+                            dialog.cancel();
+                        }
+                    }).show();
+            //Toast.makeText(getApplicationContext(), "Sorry Its against our school policies", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
@@ -158,7 +187,7 @@ public class ResultDetailActivity extends AppCompatActivity {
                         JSONObject jsonObject1=jsonArray.getJSONObject(i);
                         total+=jsonObject1.getInt("marks");
                         addRows(jsonObject1.getString("subject"),"32","80",jsonObject1.getInt("marks")+"");
-
+                        //check in which subject the marks is less than average.
                         //studentMarkModels.add(new StudentMarkModel(jsonObject1.getString()))
 
                         i++;
@@ -173,7 +202,8 @@ public class ResultDetailActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                handleVolleyError(error);
+                hideDialog();
             }
         }){
 
@@ -230,5 +260,23 @@ public class ResultDetailActivity extends AppCompatActivity {
         }
 
     }
+    public void handleVolleyError(VolleyError error){
+        if(error instanceof TimeoutError){
+            showListError("Server TimeOut");
+
+        }
+        else if(error instanceof ServiceConnection){
+            showListError("Server Connection Lost");
+        }
+        else if(error instanceof NoConnectionError){
+            showListError("No Internet Connection");
+        }
+    }
+
+    public void showListError(String error){
+        Toast.makeText(getApplicationContext(),error,Toast.LENGTH_SHORT).show();
+    }
+
+
 
 }

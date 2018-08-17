@@ -20,6 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="100dp">
 
+
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -51,7 +52,7 @@
                     android:layout_height="26dp"
                     android:layout_marginTop="36dp"
                     android:drawableRight="@drawable/down"
-                    android:text="Admin name"
+                    android:text="Ashish"
                     android:textColor="@color/yellow"
                     android:textSize="16dp"
                     android:textStyle="bold"
@@ -95,6 +96,8 @@
 
     </android.support.design.widget.AppBarLayout>
 
+
+
     <LinearLayout
         android:layout_width="359dp"
         android:layout_height="match_parent"
@@ -106,6 +109,10 @@
         app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+
+
+
 
         <LinearLayout
 
@@ -186,6 +193,7 @@
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.v7.widget.CardView>
+
 
 
             <android.support.v7.widget.CardView
@@ -416,6 +424,7 @@
 
         </LinearLayout>
 
+
         <LinearLayout
 
             android:layout_width="match_parent"
@@ -502,6 +511,7 @@
     </LinearLayout>
 
 
+
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/material_design_floating_action_button"
         android:layout_width="wrap_content"
@@ -542,7 +552,8 @@
         app:menu_shadowRadius="4dp"
         app:menu_shadowXOffset="1dp"
         app:menu_shadowYOffset="4dp"
-        app:menu_showShadow="true"
+        app:menu_showShadow="true">
+
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/addEvent"
             android:layout_width="wrap_content"

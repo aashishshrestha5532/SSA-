@@ -1,13 +1,18 @@
 package com.alchemist.ssa.OtherStuffs;
 
+import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,9 +24,9 @@ import com.alchemist.ssa.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StaffDetail extends AppCompatActivity{
+public class StaffDetail extends AppCompatActivity {
     private RecyclerView staffRecycleView;
-    private List<StaffModel> staffModelList=new ArrayList<>();
+    private List<StaffModel> staffModelList = new ArrayList<>();
     private StaffAdapter staffAdapter;
     private Button searchButton;
     private SearchInterface searchInterface;
@@ -31,10 +36,9 @@ public class StaffDetail extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_staff_detail);
 
-        staffRecycleView=findViewById(R.id.staffRecycleView);
-        Toolbar toolbar= findViewById(R.id.resultToolBar);
+        staffRecycleView = findViewById(R.id.staffRecycleView);
+        Toolbar toolbar = findViewById(R.id.resultToolBar);
         setSupportActionBar(toolbar);
-
 
 
 //        searchButton=findViewById(R.id.searchButton);
@@ -46,7 +50,49 @@ public class StaffDetail extends AppCompatActivity{
 //            }
 //        });
 
-        staffAdapter=new StaffAdapter(getApplicationContext(),staffModelList);
+        staffAdapter = new StaffAdapter(getApplicationContext(), staffModelList);
+
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT ) {
+
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                Toast.makeText(getApplicationContext(), "on Move", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+            @Override
+            public void onSwiped(final RecyclerView.ViewHolder viewHolder, int swipeDir) {
+               // Toast.makeText(getApplicationContext(), "on Swiped ", Toast.LENGTH_SHORT).show();
+                //Remove swiped item from list and notify the RecyclerView
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(StaffDetail.this);
+                builder1.setTitle("Phone call")
+                        .setMessage("Do you sure want to make call?")
+                        .setCancelable(false)
+                        .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //Toast.makeText(getApplicationContext(),list.get(viewHolder.getAdapterPosition()).getEvent_id()+"",Toast.LENGTH_SHORT).show();
+                                int position = viewHolder.getAdapterPosition();
+                                Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                                callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_NO_USER_ACTION);
+                                callIntent.setData(Uri.parse("tel:"+staffModelList.get(position).getPhone()));
+                                startActivity(callIntent);
+
+
+                            }
+                        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                        staffAdapter.notifyDataSetChanged();
+                    }
+                }).show();
+
+
+            }
+        };
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(staffRecycleView);
        // staffAdapter.searchEnableInterface(this);
 
         loadResult();
@@ -84,17 +130,12 @@ public class StaffDetail extends AppCompatActivity{
 
     private void loadResult() {
 
-        StaffModel staffModel=new StaffModel("Papu",981411111,"primary");
+        StaffModel staffModel=new StaffModel("Papu",981411111,"principal");
         staffModelList.add(staffModel);
 
-        staffModel=new StaffModel("RKC",98114111,"secondary");
+        staffModel=new StaffModel("RKC",98114111,"teacher");
         staffModelList.add(staffModel);
 
-        staffModel=new StaffModel("BKM",98114111,"pre-primary");
-        staffModelList.add(staffModel);
-
-        staffModel=new StaffModel("KAC",98114111,"secondary");
-        staffModelList.add(staffModel);
         staffAdapter.notifyDataSetChanged();
 
     }

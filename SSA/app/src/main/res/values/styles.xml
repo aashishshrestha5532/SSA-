@@ -9,7 +9,10 @@
     </style>
 
     <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:background">@drawable/schoologo</item>
+        <item name="android:background">@mipmap/applogo2</item>
+        <!--<item name="android:background">@mipmap/applogo2</item>-->
+        <!--<item name="android:adjustViewBounds">true</item>-->
+        <item name="android:scaleType">centerCrop</item>
     </style>
 
     <style name="TransTheme" parent="Theme.AppCompat.Light.NoActionBar">

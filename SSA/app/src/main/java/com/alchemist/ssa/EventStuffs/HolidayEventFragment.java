@@ -1,6 +1,7 @@
 package com.alchemist.ssa.EventStuffs;
 
 import android.app.ProgressDialog;
+import android.content.ServiceConnection;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,12 +13,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.alchemist.ssa.NetworkStuffs.StringResource;
 import com.alchemist.ssa.R;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -128,7 +132,7 @@ public class HolidayEventFragment extends Fragment {
                         String event_type=jsonObject1.getString("type");
                         String date=jsonObject1.getString("date");
                         if(event_type.equals("holiday"))
-                        list.add(new EventModel(event_title,date,event_type, BitmapFactory.decodeResource(getResources(),R.drawable.logoholiday)));
+                        list.add(new EventModel(event_title,date,event_type, BitmapFactory.decodeResource(getResources(),R.mipmap.admin45)));
                         count++;
 
                     }
@@ -145,7 +149,7 @@ public class HolidayEventFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                handleVolleyError(error);
             }
         });
 
@@ -221,6 +225,23 @@ public class HolidayEventFragment extends Fragment {
         }
 
     }
+    public void handleVolleyError(VolleyError error){
+        if(error instanceof TimeoutError){
+            showListError("Server TimeOut");
+
+        }
+        else if(error instanceof ServiceConnection){
+            showListError("Server Connection Lost");
+        }
+        else if(error instanceof NoConnectionError){
+            showListError("No Internet Connection");
+        }
+    }
+
+    public void showListError(String error){
+        Toast.makeText(getActivity(),error,Toast.LENGTH_SHORT).show();
+    }
+
 
 }
 

@@ -21,17 +21,18 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.ViewHolder> 
     List<StaffModel> staffModelList;
     private Context context;
     private SearchInterface searchInterface;
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(context).inflate(R.layout.staffdetail,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.staffdetail, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-            holder.teacherName.setText(staffModelList.get(position).getTeacherName());
-            holder.contactNo.setText(staffModelList.get(position).getPhone()+"");
-            holder.position.setText(staffModelList.get(position).getLevel());
+    public void onBindViewHolder(ViewHolder holder, final int position) {
+        holder.teacherName.setText(staffModelList.get(position).getTeacherName());
+        holder.contactNo.setText(staffModelList.get(position).getPhone() + "");
+        holder.position.setText(staffModelList.get(position).getLevel());
 
     }
 

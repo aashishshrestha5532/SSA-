@@ -3,6 +3,7 @@ package com.alchemist.ssa.ResultStuffs;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -12,18 +13,22 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.alchemist.ssa.NetworkStuffs.StringResource;
 import com.alchemist.ssa.OtherStuffs.SearchInterface;
 import com.alchemist.ssa.R;
 import com.android.volley.AuthFailureError;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -52,13 +57,14 @@ public class StudentResult extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_result);
         bundle=getIntent().getExtras();
-
+        studentResultAdapter=new StudentResultAdapter(this,studentResultModels);
         searchStudentResult=findViewById(R.id.searchStudentResult);
         progressDialog=new ProgressDialog(this);
         progressDialog.setMessage("Loading..");
         progressDialog.setCancelable(false);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         showDialog();
+        loadResult();
 
         searchButton=findViewById(R.id.searchButton);
         Toolbar toolbar= findViewById(R.id.resultToolBar);
@@ -86,21 +92,21 @@ public class StudentResult extends AppCompatActivity {
                 }
 
                 studentResultAdapter.setFilter(newlinkModels);
-                studentResultAdapter.notifyDataSetChanged();
+               // studentResultAdapter.notifyDataSetChanged();
 
             }
         };
         setSupportActionBar(toolbar);
-       loadResult();
 
-        studentResultAdapter=new StudentResultAdapter(this,studentResultModels);
+
+
 
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         searchStudentResult.setLayoutManager(linearLayoutManager);
         searchStudentResult.setAdapter(studentResultAdapter);
-        studentResultModels.clear();
-        studentResultAdapter.notifyDataSetChanged();
+//        studentResultModels.clear();
+//        studentResultAdapter.notifyDataSetChanged();
 
 
     }
@@ -117,7 +123,7 @@ public class StudentResult extends AppCompatActivity {
                 try {
                     int i=0;
                     String marks="";
-
+                    Log.d("response",response.toString());
                     jsonObject = new JSONObject(response);
                     JSONArray jsonArray=jsonObject.getJSONArray("student_list");
                     while(i<jsonArray.length()){
@@ -151,7 +157,8 @@ public class StudentResult extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                handleVolleyError(error);
+                hideDialog();
             }
         }){
 
@@ -235,6 +242,24 @@ public class StudentResult extends AppCompatActivity {
         }
 
     }
+    public void handleVolleyError(VolleyError error){
+        if(error instanceof TimeoutError){
+            showListError("Server TimeOut");
+
+        }
+        else if(error instanceof ServiceConnection){
+            showListError("Server Connection Lost");
+        }
+        else if(error instanceof NoConnectionError){
+            showListError("No Internet Connection");
+        }
+    }
+
+    public void showListError(String error){
+        Toast.makeText(getApplicationContext(),error,Toast.LENGTH_SHORT).show();
+    }
+
+
 
 
 

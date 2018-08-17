@@ -49,6 +49,7 @@
         android:id="@+id/teacherPos"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
+        android:drawableRight="@drawable/phone"
 
         android:text="Primary level"
         />

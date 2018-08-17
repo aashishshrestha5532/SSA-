@@ -5,7 +5,7 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="8" />
-
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
@@ -56,7 +56,13 @@
         <activity
             android:name=".StartingStuffs.SplashScreen"
             android:noHistory="true"
-            android:theme="@style/SplashTheme" />
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".StartingStuffs.WelcomeActivity"
             android:noHistory="true" />
@@ -74,21 +80,21 @@
         </activity>
         <activity android:name=".ResultStuffs.ResultDetailActivity" />
         <activity android:name=".PerformanceStuffs.Performance" />
-        <activity android:name=".OtherStuffs.StaffDetail" />
+        <activity android:name=".OtherStuffs.StaffDetail" >
+            <intent-filter>
+                <action android:name="android.intent.action.DIAL" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".LoginStuffs.TeacherDashBoard"
             android:label="@string/title_activity_teacher_dash_board" />
         <activity android:name=".ResultStuffs.CheckResultBoard" />
         <activity android:name=".LoginStuffs.AddEvent" />
-        <activity android:name=".ScheduleStuffs.AddSchedule"></activity>
-        <activity android:name=".AdminStuffs.AdminHome">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".AdminStuffs.EventList"></activity>
+        <activity android:name=".ScheduleStuffs.AddSchedule" />
+        <activity android:name=".AdminStuffs.AdminHome"></activity>
+        <activity android:name=".AdminStuffs.EventList" />
+        <activity android:name=".AdminStuffs.SendNotice"></activity>
     </application>
 
 </manifest>
