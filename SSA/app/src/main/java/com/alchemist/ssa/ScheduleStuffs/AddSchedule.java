@@ -62,7 +62,8 @@ public class AddSchedule extends AppCompatActivity {
     ArrayAdapter<String> subAdapter;
     private RadioButton radioButton;
     private ProgressDialog progressDialog;
-    private String classes[]={"class 1","class 2","class 3","class 4","class 5","class 6","class 7","class 8","class 9","class 10"};
+    private String classes[]={"1st year","2nd year","3rd year","4th year"};
+    //private String classes[]={"class 1","class 2","class 3","class 4","class 5","class 6","class 7","class 8","class 9","class 10"};
     private String teachers[]={"teacher 1","teacher 2","teacher 3"};
     private String subject[]={"Mth101","CMP555","Eng333","MTH121"};
     private String subject2[]={"MTH505"};

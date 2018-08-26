@@ -64,7 +64,8 @@ public class Attendance extends AppCompatActivity implements AttendanceInterface
     private boolean flag;
     private List<AttendanceGridModel> attendanceGridModels=new ArrayList<>();
     private List<AttendanceCheck> attendanceChecks=new ArrayList<>();
-    private String classes[]={"class 1","class 2","class 3","class 4","class 5","class 6","class 7","class 8","class 9","class 10"};
+    private String classes[]={"1st year","2nd year","3rd year","4th year"};
+    //private String classes[]={"class 1","class 2","class 3","class 4","class 5","class 6","class 7","class 8","class 9","class 10"};
     private String sections[]={"section 1","section 2","section 3"};
     private String subject[]={"Mth101","CMP555","Eng333","MTH121"};
     @Override
@@ -365,7 +366,7 @@ public class Attendance extends AppCompatActivity implements AttendanceInterface
 
                String sec_id=sSppiner.getSelectedItem().toString();
                 Map<String,String> params=new HashMap<>();
-                params.put("class_id",c_id.substring(5));
+                params.put("class_id",c_id.substring(0,1));
                 params.put("section_id",sec_id.substring(7));
                 params.put("sub_id",subSpinner.getSelectedItem().toString());
                 return params;
@@ -418,7 +419,7 @@ public class Attendance extends AppCompatActivity implements AttendanceInterface
                 Map<String,String> params=new HashMap<>();
                 params.put("datas",dataa);
                 params.put("size",String.valueOf(asize));
-                params.put("class_id",cSpinner.getSelectedItem().toString().substring(5));
+                params.put("class_id",cSpinner.getSelectedItem().toString().substring(0,1));
                 params.put("section_id",sSppiner.getSelectedItem().toString().substring(7));
                 params.put("sub_id",subSpinner.getSelectedItem().toString());
                 return params;

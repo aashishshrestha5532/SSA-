@@ -48,7 +48,8 @@ public class SendNotice extends AppCompatActivity {
     private LinearLayout linearLayout;
     private Spinner classSpinner, sectionSpinner;
     private ProgressDialog progressDialog;
-    private String classes[] = {"class 1", "class 2", "class 3", "class 4", "class 5", "class 6", "class 7", "class 8", "class 9", "class 10"};
+    private String classes[]={"1st year","2nd year","3rd year","4th year"};
+    //private String classes[] = {"class 1", "class 2", "class 3", "class 4", "class 5", "class 6", "class 7", "class 8", "class 9", "class 10"};
     private String sections[] = {"section 1", "section 2", "section 3"};
 
     @Override
@@ -160,7 +161,7 @@ public class SendNotice extends AppCompatActivity {
                 params.put("msg", msg);
                 params.put("from", fromUser);
                 params.put("code", code);
-                params.put("c_id", classSpinner.getSelectedItem().toString().substring(5));
+                params.put("c_id", classSpinner.getSelectedItem().toString().substring(0,1));
                 params.put("s_id", sectionSpinner.getSelectedItem().toString().substring(7));
 
                 return params;

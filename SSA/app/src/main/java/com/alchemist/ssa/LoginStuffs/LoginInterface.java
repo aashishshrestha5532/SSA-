@@ -18,7 +18,6 @@ import android.view.animation.Transformation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.alchemist.ssa.AdminStuffs.AdminHome;
 import com.alchemist.ssa.NetworkStuffs.StringResource;
@@ -129,7 +128,10 @@ public class LoginInterface extends AppCompatActivity {
                 if(validateUser(user.getText().toString(),password.getText().toString())) {
                     verifyUser(user.getText().toString(), password.getText().toString(), code, key);
                 }
-                else Toast.makeText(getApplicationContext(),"Empty fields",Toast.LENGTH_SHORT).show();
+                else {
+                    hideDialog();
+                    Snackbar.make(constraintLayout,"Empty field ",Snackbar.LENGTH_LONG).show();
+                }
                 //Toast.makeText(getApplicationContext(),key,Toast.LENGTH_SHORT).show();
 
 

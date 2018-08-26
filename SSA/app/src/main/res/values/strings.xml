@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">SSA</string>
+    <string name="app_name">MyCollege</string>
 
-    <string name="ipaddress">http://192.168.1.107:8000</string>
+    <string name="ipaddress">http://192.168.1.108:8000</string>
     <string name="firebase_token">firebaseToken</string>
     <string name="fcm_key">fcm_key</string>
     <string name="sunday">sunday</string>
@@ -29,4 +29,3 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
 </resources>
-

@@ -17,8 +17,8 @@ public class CheckResultBoard extends AppCompatActivity {
 
     private Spinner class_id,section_id,terminal;
     Button checkResult;
-
-    private String classes[]={"class 1","class 2","class 3","class 4","class 5","class 6","class 7","class 8","class 9","class 10"};
+    private String classes[]={"1st year","2nd year","3rd year","4th year"};
+    //private String classes[]={"class 1","class 2","class 3","class 4","class 5","class 6","class 7","class 8","class 9","class 10"};
     private String sections[]={"section 1","section 2","section 3"};
     private String terminals[]={"1st","2nd","3rd","4th"};
 
@@ -52,7 +52,7 @@ public class CheckResultBoard extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(getApplicationContext(),StudentResult.class);
-                intent.putExtra("class_id",class_id.getSelectedItem().toString().substring(5));
+                intent.putExtra("class_id",class_id.getSelectedItem().toString().substring(0,1));
                 intent.putExtra("section_id",section_id.getSelectedItem().toString().substring(7));
                 intent.putExtra("terminal",terminal.getSelectedItem().toString().substring(0,1));
 

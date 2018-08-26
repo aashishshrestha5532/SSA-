@@ -186,7 +186,7 @@ public class ResultDetailActivity extends AppCompatActivity {
                     while(i<jsonArray.length()){
                         JSONObject jsonObject1=jsonArray.getJSONObject(i);
                         total+=jsonObject1.getInt("marks");
-                        addRows(jsonObject1.getString("subject"),"32","80",jsonObject1.getInt("marks")+"");
+                        addRows(jsonObject1.getString("subject"),"32","100",jsonObject1.getInt("marks")+"");
                         //check in which subject the marks is less than average.
                         //studentMarkModels.add(new StudentMarkModel(jsonObject1.getString()))
 
