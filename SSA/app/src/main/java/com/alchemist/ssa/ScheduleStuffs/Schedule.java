@@ -83,6 +83,7 @@ public class Schedule extends AppCompatActivity implements ScheduleInterface {
                     JSONObject jsonObject = new JSONObject(response);
                     Log.d("response",response);
                     hideDialog();
+                    //check for commit
                     JSONArray jsonArray=jsonObject.getJSONArray("response");
                     while(i<jsonArray.length()) {
                         JSONObject jsonObject1 = jsonArray.getJSONObject(i);
